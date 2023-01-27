@@ -1,7 +1,6 @@
 # vue-demo
 
-# deploy
-run deploy.sh to deploy!
+# deploy 
 ## Project setup
 ```
 npm install
