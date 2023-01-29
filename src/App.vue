@@ -1,10 +1,29 @@
 <template>
+  <v-toolbar title=" cassccas">
+      <v-btn icon>
+        <v-icon icon="mdi-minus" size="small"></v-icon>
+      </v-btn>
+    </v-toolbar>
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
+    <v-btn @click="increment">Hi
+      <v-icon icon="mdi-minus" size="small"></v-icon>
+    </v-btn>
   </nav>
   <router-view/>
 </template>
+
+<script>
+export default {
+  
+  methods: {
+    increment() {
+      console.log('hi')
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -32,4 +51,5 @@ nav a.router-link-exact-active {
 body {
   margin: 0px
 }
+
 </style>
