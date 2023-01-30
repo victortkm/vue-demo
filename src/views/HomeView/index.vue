@@ -19,6 +19,6 @@ export default {
 
 <style>
 .home {
-  background-color: grey;
+  background-color: lightgrey;
 }
 </style>

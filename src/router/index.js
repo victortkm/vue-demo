@@ -1,6 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView'
 import AboutView from '../views/AboutView'
+import UserListView from '../views/UserListView/index.vue'
+import UserView from '../views/UserView'
+import GroupListView from '../views/GroupListView'
+import GroupView from '../views/GroupView'
 
 const routes = [
   {
@@ -16,7 +20,27 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     // component: () => import(/* webpackChunkName: "about" */ '../views/AboutView/index.vue')
     component: AboutView
-  }
+  },
+  {
+    path: '/userListing',
+    name: 'userListing',
+    component: UserListView
+  },
+  {
+    path: '/userDetails',
+    name: 'userDetails',
+    component: UserView
+  },
+  {
+    path: '/groupListing',
+    name: 'groupListing',
+    component: GroupListView
+  },
+  {
+    path: '/groupDetails',
+    name: 'groupDetails',
+    component: GroupView
+  },
 ]
 
 const router = createRouter({
