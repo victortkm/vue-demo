@@ -12,7 +12,8 @@
     <router-link to="/userListing">User Listing</router-link> |
     <router-link to="/userDetails">User Details</router-link> |
     <router-link to="/groupListing">Group Listing</router-link> |
-    <router-link to="/groupDetails">Group Details</router-link>
+    <router-link to="/groupDetails">Group Details</router-link> |
+    <router-link to="/settings">Settings</router-link>
     <!-- <v-btn @click="increment">Hi
       <v-icon icon="mdi-minus" size="small"></v-icon>
     </v-btn> -->
@@ -21,6 +22,7 @@
 </template>
 
 <script>
+import './style/style.css'
 export default {
   
   methods: {
@@ -60,6 +62,9 @@ body {
 
 html {
   background-color: lightgray;
+  background: rgb(52,0,130);
+  background: linear-gradient(135deg, rgba(52,0,130,1) 0%, rgba(58,54,189,1) 50%, rgba(0,171,187,1) 100%);
+  background-size: 100vw 100vh;
 }
 
 .temp-nav {

@@ -1,6 +1,6 @@
 <template>
   <div class="mainbody">
-    <h1>Group Listing</h1>
+    <h1>Settings</h1>
   </div>
 </template>
 

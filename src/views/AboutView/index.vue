@@ -18,7 +18,4 @@ export default {
 </script>
 
 <style>
-.about {
-  background-color:  white;
-}
 </style>

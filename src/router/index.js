@@ -5,6 +5,7 @@ import UserListView from '../views/UserListView/index.vue'
 import UserView from '../views/UserView'
 import GroupListView from '../views/GroupListView'
 import GroupView from '../views/GroupView'
+import SettingView from '../views/SettingView'
 
 const routes = [
   {
@@ -29,7 +30,8 @@ const routes = [
   {
     path: '/userDetails',
     name: 'userDetails',
-    component: UserView
+    component: UserView,
+    props: true 
   },
   {
     path: '/groupListing',
@@ -40,6 +42,11 @@ const routes = [
     path: '/groupDetails',
     name: 'groupDetails',
     component: GroupView
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: SettingView
   },
 ]
 

@@ -1,0 +1,140 @@
+.mainbody {
+    background-color: white;
+    margin: 20px;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+/* page title */
+.page-title-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-title {
+  display: inline;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 3%;
+}
+
+/* listing filter */
+.filter-div {
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+  border-radius: 8px;
+  margin: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 10px;
+}
+.filter-title {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 3%;
+  display: flex;
+}
+
+.filter-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.filter-search-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn-container {
+  margin-right: 10px;
+}
+
+/* table */
+.v-table {
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+}
+
+thead tr {
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background: #DDD
+  }
+  
+tbody tr:nth-child(odd) {
+    background: #EEE
+}
+
+.table-action-row {
+  justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+}
+
+.table-action-row i {
+  transition: 0.5s;
+}
+
+.table-action-row i:hover {
+  opacity: 50%;
+}
+
+/* general width */
+.w-10 {
+  width: 10%;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-45 {
+  width: 45%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+/* pagination */
+.v-pagination__item {
+  transition: 0.5s;
+}
+/* .v-pagination__item button:hover {
+  color: #0ce0fc;
+} */
+.v-pagination__item--is-active {
+  color: rgb(78, 175, 255);
+}
+
+.btn-create {
+  background-color: #56e6a5 !important;
+  /* color: white !important; */
+  font-weight: bolder !important;
+  border-radius: 5px !important;
+  border-color: black !important;
+  border-width: 1px !important;
+}
+
+.btn-normal {
+  font-weight: bolder !important;
+  border-radius: 5px !important;
+  border-color: black !important;
+  border-width: 1px !important;
+}
+

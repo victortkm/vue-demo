@@ -14,7 +14,4 @@ export default {
 </script>
 
 <style>
-.mainbody {
-  background-color: lightgrey;
-}
 </style>
