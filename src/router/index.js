@@ -30,8 +30,7 @@ const routes = [
   {
     path: '/userDetails',
     name: 'userDetails',
-    component: UserView,
-    props: true 
+    component: UserView
   },
   {
     path: '/groupListing',

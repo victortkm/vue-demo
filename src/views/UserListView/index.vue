@@ -56,13 +56,31 @@
       <thead>
         <tr>
           <th class="text-left w-30">
-            Name
+            <div class="table-label-div">
+              Name
+              <div>
+                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
+                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+              </div>
+            </div>
           </th>
           <th class="text-left w-50">
-            Description
+            <div class="table-label-div">
+              Description
+              <div>
+                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
+                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+              </div>
+            </div>
           </th>
           <th class="w-20">
-            Actions
+            <div class="table-label-div">
+              Actions
+              <div>
+                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
+                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+              </div>
+            </div>
           </th>
         </tr>
       </thead>
@@ -74,13 +92,13 @@
           <td>{{ item.name }}</td>
           <td>{{ item.description }}</td>
           <td class="table-action-row">
-            <button @click="viewDetails(item)">
+            <button @click="viewDetails(item)" :disabled="!viewPermission">
               <v-icon icon="mdi-magnify" size="large"/>
             </button>
-            <button @click="editDetails(item)">
+            <button @click="editDetails(item)" :disabled="!editPermission">
               <v-icon icon="mdi-pencil" size="large"/>
             </button>
-            <button @click="deleteDetails(item)">
+            <button @click="deleteDetails(item)" :disabled="!deletePermission">
               <v-icon icon="mdi-delete" size="large"/>
             </button>
           </td>
@@ -122,7 +140,10 @@ export default {
         }
 
       ],
-      page: 1
+      page: 1,
+      viewPermission: true,
+      editPermission: true,
+      deletePermission: true
     }
   },
   methods: {
@@ -131,16 +152,28 @@ export default {
     },
     viewDetails(item){
       console.log(item)
-      this.$router.push({
-        name: 'userDetails',
-        params: "blahblah"
-      })
+      // this.$router.push({
+      //   name: 'userDetails',
+      //   params: "blahblah"
+      // })
+      // this.$router.push({
+      //   name: 'userDetails', 
+      //   params: {
+      //     wakawaka:"blahblah"
+      //   }
+      // })
+      this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
+
     },
     editDetails(item){
       console.log(item)
+      this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
     },
     deleteDetails(item){
       console.log(item, this.$router)
+    },
+    sortBy(){
+      console.log("hi")
     }
   }
 }
