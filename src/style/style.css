@@ -93,12 +93,24 @@ tbody tr:nth-child(odd) {
 }
 
 /* general width */
+.w-5 {
+  width: 5%;
+}
+
 .w-10 {
   width: 10%;
 }
 
+.w-15 {
+  width: 15%;
+}
+
 .w-20 {
   width: 20%;
+}
+
+.w-25 {
+  width: 25%;
 }
 
 .w-30 {
@@ -146,6 +158,14 @@ tbody tr:nth-child(odd) {
   border-width: 1px !important;
 }
 
+.btn-delete {
+  background-color: #ff905d !important;
+  font-weight: bolder !important;
+  border-radius: 5px !important;
+  border-color: black !important;
+  border-width: 1px !important;
+}
+
 .btn-normal {
   font-weight: bolder !important;
   border-radius: 5px !important;
@@ -181,4 +201,20 @@ tbody tr:nth-child(odd) {
 
 .display-none {
   display: none;
+}
+
+.dashboard-div {
+  background-color: white;
+  margin: 20px;
+  border-radius: 8px;
+  padding: 25px;
+  /* min-height: 50%;  */
+}
+
+.main-dialog {
+  padding: 15px;
+}
+
+.dialog-actions-view{
+  justify-content: space-around;
 }

@@ -109,7 +109,9 @@ export default {
     },
   },
   mounted(){
-    console.log(this.$store.getters)
+    const userData = this.$store.getters.getUserDeta
+    this.$data.mode = userData.mode
+    console.log(this.$data.mode)
   },
   created(){
   }

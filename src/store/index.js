@@ -2,15 +2,18 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    userdetail: {
+    userDetail: {
       id: 0,
-      mode: 'view'
+      mode: 'View'
     },
     count: 322
   },
   getters: {
     getCount(state){
       return state.count
+    },
+    getUserDeta(state){
+      return state.userDetail
     }
   },
   mutations: {
@@ -18,6 +21,7 @@ export default createStore({
       state.count++
     },
     setUserDetail(state, item){
+      console.log("item",item)
       state.userDetail = item
     }
   },

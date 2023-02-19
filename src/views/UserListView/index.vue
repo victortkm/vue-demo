@@ -3,7 +3,7 @@
 
     <div class="page-title-div">
       <h1 class="page-title">User Listing</h1>
-      <v-btn class="btn-create">Create New</v-btn>
+      <v-btn class="btn-create" @click="onCreate()">Create New</v-btn>
     </div>
 
     <!-- filter section -->
@@ -16,6 +16,7 @@
             density="compact"
             variant="outlined"
             clearable
+            v-model="search.username"
             />
         </div>
         <div class="w-45">
@@ -24,6 +25,7 @@
             density="compact"
             variant="outlined"
             clearable
+            v-model="search.firstName"
             />
         </div>
       </div>
@@ -34,15 +36,22 @@
             density="compact"
             variant="outlined"
             clearable
+            v-model="search.lastName"
             />
         </div>
         <div class="w-45">
+          <v-select
+            :items="search.groupList"
+            label="Group Name"
+            density="compact"
+            variant="outlined"
+          />
         </div>
       </div>
 
       <div class="filter-search-row">
         <div class="btn-container">
-          <v-btn class="btn-normal">Clear</v-btn>
+          <v-btn class="btn-normal" @click="clear()">Clear</v-btn>
         </div>
         <div class="btn-container">
           <v-btn class="btn-normal">Search</v-btn>
@@ -55,31 +64,72 @@
     <v-table>
       <thead>
         <tr>
-          <th class="text-left w-30">
+          <th class="text-left w-10">
             <div class="table-label-div">
-              Name
+              User ID
               <div>
                 <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
                 <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
               </div>
             </div>
           </th>
-          <th class="text-left w-50">
+          <th class="text-left w-15">
             <div class="table-label-div">
-              Description
+              Username
               <div>
                 <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
                 <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
               </div>
             </div>
           </th>
-          <th class="w-20">
+          <th class="text-left w-10">
+            <div class="table-label-div">
+              First Name
+              <div>
+                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
+                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+              </div>
+            </div>
+          </th>
+          <th class="text-left w-10">
+            <div class="table-label-div">
+              Last Name
+              <div>
+                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
+                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+              </div>
+            </div>
+          </th>
+          <th class="text-left w-15">
+            <div class="table-label-div">
+              Group Name
+              <div>
+                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
+                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+              </div>
+            </div>
+          </th>
+          <th class="text-left w-10">
+            <div class="table-label-div">
+              Created Time
+              <div>
+                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
+                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+              </div>
+            </div>
+          </th>
+          <th class="text-left w-10">
+            <div class="table-label-div">
+              Updated Time
+              <div>
+                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
+                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+              </div>
+            </div>
+          </th>
+          <th class="w-15">
             <div class="table-label-div">
               Actions
-              <div>
-                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
-                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
-              </div>
             </div>
           </th>
         </tr>
@@ -87,10 +137,15 @@
       <tbody>
         <tr
           v-for="item in items"
-          :key="item.name"
+          :key="item.username"
         >
-          <td>{{ item.name }}</td>
-          <td>{{ item.description }}</td>
+          <td>{{ item.userId }}</td>
+          <td>{{ item.username }}</td>
+          <td>{{ item.firstName }}</td>
+          <td>{{ item.lastName }}</td>
+          <td>{{ item.groupName }}</td>
+          <td>{{ item.createTime }}</td>
+          <td>{{ item.updateTime }}</td>
           <td class="table-action-row">
             <button @click="viewDetails(item)" :disabled="!viewPermission">
               <v-icon icon="mdi-magnify" size="large"/>
@@ -98,7 +153,7 @@
             <button @click="editDetails(item)" :disabled="!editPermission">
               <v-icon icon="mdi-pencil" size="large"/>
             </button>
-            <button @click="deleteDetails(item)" :disabled="!deletePermission">
+            <button @click="deleteDialog(item)" :disabled="!deletePermission">
               <v-icon icon="mdi-delete" size="large"/>
             </button>
           </td>
@@ -115,8 +170,28 @@
         :total-visible="6"
         @click="onClickPagination"
       />
-
     </div>
+    
+    <!-- delete dialog -->
+    <v-dialog
+      v-model="dialog.status"
+      width="auto"
+    >
+      <v-card>
+        <div class="main-dialog">
+          <v-card-title>
+            Delete User
+          </v-card-title>
+          <v-card-text>
+            Are you sure you want to delete {{ dialog.data }}
+          </v-card-text>
+          <v-card-actions class="dialog-actions-view">
+            <v-btn class="btn-normal" @click="closeDialog()">Cancel</v-btn>
+            <v-btn class="btn-delete" @click="onDelete()">Delete</v-btn>
+          </v-card-actions>
+        </div>
+      </v-card>
+    </v-dialog>
 
   </div>
 </template>
@@ -143,7 +218,17 @@ export default {
       page: 1,
       viewPermission: true,
       editPermission: true,
-      deletePermission: true
+      deletePermission: true,
+      dialog: {
+        status: false,
+        data: null
+      },
+      search: {
+        username: '',
+        firstName: '',
+        lastName: '',
+        groupName: ''
+      }
     }
   },
   methods: {
@@ -152,28 +237,55 @@ export default {
     },
     viewDetails(item){
       console.log(item)
-      // this.$router.push({
-      //   name: 'userDetails',
-      //   params: "blahblah"
-      // })
-      // this.$router.push({
-      //   name: 'userDetails', 
-      //   params: {
-      //     wakawaka:"blahblah"
-      //   }
-      // })
-      this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
+      this.$store.commit('setUserDetail',
+        {
+          id: 10,
+          mode: 'View'
+        }
+      )
+      this.$router.push({ name: 'userDetails' })
+      // this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
 
     },
     editDetails(item){
       console.log(item)
-      this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
+      this.$store.commit('setUserDetail',
+        {
+          id: 10,
+          mode: 'Edit'
+        }
+      )
+      this.$router.push({ name: 'userDetails' })
     },
-    deleteDetails(item){
-      console.log(item, this.$router)
+    deleteDialog(item){
+      console.log('del',item)
+      this.$data.dialog.status = true
+    },
+    closeDialog(){
+      this.$data.dialog.status = false
     },
     sortBy(){
       console.log("hi")
+    },
+    clear(){
+      this.$data.search = {
+        username: '',
+        firstName: '',
+        lastName: '',
+        group: {}
+      }
+    },
+    onCreate(){
+      this.$store.commit('setUserDetail',
+        {
+          id: 10,
+          mode: 'Create'
+        }
+      )
+      this.$router.push({ name: 'userDetails' })
+    },
+    onDelete() {
+
     }
   }
 }
