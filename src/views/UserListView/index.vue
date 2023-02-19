@@ -68,8 +68,8 @@
             <div class="table-label-div">
               User ID
               <div>
-                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
-                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+                <v-icon @click="sortBy({name: 'userId', type: 'ASC'})" :icon="iconSort({name: 'userId', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'userId', type: 'DESC'})"  :icon="iconSort({name: 'userId', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -77,8 +77,8 @@
             <div class="table-label-div">
               Username
               <div>
-                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
-                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+                <v-icon @click="sortBy({name: 'username', type: 'ASC'})" :icon="iconSort({name: 'username', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'username', type: 'DESC'})" :icon="iconSort({name: 'username', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -86,8 +86,8 @@
             <div class="table-label-div">
               First Name
               <div>
-                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
-                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+                <v-icon @click="sortBy({name: 'firstName', type: 'ASC'})" :icon="iconSort({name: 'firstName', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'firstName', type: 'DESC'})" :icon="iconSort({name: 'firstName', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -95,8 +95,8 @@
             <div class="table-label-div">
               Last Name
               <div>
-                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
-                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+                <v-icon @click="sortBy({name: 'lastName', type: 'ASC'})" :icon="iconSort({name: 'lastName', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'lastName', type: 'DESC'})" :icon="iconSort({name: 'lastName', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -104,8 +104,8 @@
             <div class="table-label-div">
               Group Name
               <div>
-                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
-                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+                <v-icon @click="sortBy({name: 'groupName', type: 'ASC'})" :icon="iconSort({name: 'groupName', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'groupName', type: 'DESC'})" :icon="iconSort({name: 'groupName', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -113,8 +113,8 @@
             <div class="table-label-div">
               Created Time
               <div>
-                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
-                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+                <v-icon @click="sortBy({name: 'createTime', type: 'ASC'})" :icon="iconSort({name: 'createTime', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'createTime', type: 'DESC'})" :icon="iconSort({name: 'createTime', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -122,8 +122,8 @@
             <div class="table-label-div">
               Updated Time
               <div>
-                <v-icon @click="sortBy()" icon="mdi-menu-up" size="large"/>
-                <v-icon @click="sortBy()" icon="mdi-menu-down" size="large"/>
+                <v-icon @click="sortBy({name: 'updateTime', type: 'ASC'})" :icon="iconSort({name: 'updateTime', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'updateTime', type: 'DESC'})" :icon="iconSort({name: 'updateTime', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -228,7 +228,8 @@ export default {
         firstName: '',
         lastName: '',
         groupName: ''
-      }
+      },
+      currentSort: ''
     }
   },
   methods: {
@@ -264,8 +265,19 @@ export default {
     closeDialog(){
       this.$data.dialog.status = false
     },
-    sortBy(){
-      console.log("hi")
+    sortBy(item){
+
+      console.log('sortBy',item, this.$data.currentSort)
+      // if clicked twice then reset
+
+      if(JSON.stringify(item) === JSON.stringify(this.$data.currentSort)){
+        this.$data.currentSort = ''
+      } else {
+        this.$data.currentSort = item
+      }
+
+      //  API call here
+      
     },
     clear(){
       this.$data.search = {
@@ -285,6 +297,26 @@ export default {
       this.$router.push({ name: 'userDetails' })
     },
     onDelete() {
+
+    },
+    iconSort(obj){
+      // console.log('iconsort',obj, this.$data.currentSort)
+      if(this.$data.currentSort != null){
+        if((this.$data.currentSort.name == obj.name) && (this.$data.currentSort.type == obj.type)){
+
+          if(obj.type == 'ASC'){
+            return 'mdi-menu-up-outline'
+          } else {
+            return 'mdi-menu-down-outline'
+          }
+        }
+      }
+
+      if(obj.type == 'ASC'){
+        return 'mdi-menu-up'
+      } else {
+        return 'mdi-menu-down'
+      }
 
     }
   }
