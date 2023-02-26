@@ -11,9 +11,18 @@ import '@mdi/font/css/materialdesignicons.css'
 import router from './router'
 import store from './store'
 
+// axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+
 const vuetify = createVuetify({
   components,
   directives
 })
 
-createApp(App).use(vuetify).use(store).use(store).use(router).mount('#app')
+const temp = axios.create({
+  baseURL: '/'
+})
+
+createApp(App).use(vuetify).use(store).use(store).use(router).use(VueAxios, temp).mount('#app')

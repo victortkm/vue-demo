@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     userDetail: {
-      id: 0,
+      id: 27,
       mode: 'View'
     },
     count: 322

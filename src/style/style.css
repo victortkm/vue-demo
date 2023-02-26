@@ -218,3 +218,14 @@ tbody tr:nth-child(odd) {
 .dialog-actions-view{
   justify-content: space-around;
 }
+
+/* text input */
+.v-input--readonly:not(.v-select) .v-field {
+  background-color: lightgrey;
+}
+
+/* listing input */
+.v-input--readonly.v-select.select-is-not-editable .v-field {
+  background-color: lightgrey;
+}
+
