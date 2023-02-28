@@ -104,17 +104,17 @@
             <div class="table-label-div">
               Group Name
               <div>
-                <v-icon @click="sortBy({name: 'groupName', type: 'ASC'})" :icon="iconSort({name: 'groupName', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'groupName', type: 'DESC'})" :icon="iconSort({name: 'groupName', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'group_name', type: 'ASC'})" :icon="iconSort({name: 'group_name', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'group_name', type: 'DESC'})" :icon="iconSort({name: 'group_name', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
           <th class="text-left w-10">
             <div class="table-label-div">
-              Created Time
+              Status
               <div>
-                <v-icon @click="sortBy({name: 'createTime', type: 'ASC'})" :icon="iconSort({name: 'createTime', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'createTime', type: 'DESC'})" :icon="iconSort({name: 'createTime', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'active_flag', type: 'ASC'})" :icon="iconSort({name: 'active_flag', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'active_flag', type: 'DESC'})" :icon="iconSort({name: 'active_flag', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -122,8 +122,8 @@
             <div class="table-label-div">
               Updated Time
               <div>
-                <v-icon @click="sortBy({name: 'updateTime', type: 'ASC'})" :icon="iconSort({name: 'updateTime', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'updateTime', type: 'DESC'})" :icon="iconSort({name: 'updateTime', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'updated_time', type: 'ASC'})" :icon="iconSort({name: 'updated_time', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'updated_time', type: 'DESC'})" :icon="iconSort({name: 'updated_time', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -144,8 +144,8 @@
           <td>{{ item.firstName }}</td>
           <td>{{ item.lastName }}</td>
           <td>{{ item.groupName }}</td>
-          <td>{{ item.createTime }}</td>
-          <td>{{ item.updateTime }}</td>
+          <td>{{ getStatus(item.status) }}</td>
+          <td>{{ item.updatedTime }}</td>
           <td class="table-action-row">
             <button @click="viewDetails(item)" :disabled="!viewPermission">
               <v-icon icon="mdi-magnify" size="large"/>
@@ -197,6 +197,8 @@
 </template>
 
 <script> 
+import Util from '../../util'
+import Const from '../../constant'
 
 export default {
   name: 'UserListView',
@@ -207,7 +209,7 @@ export default {
       items: [],
       page: 1,
       totalPages: 1,
-      pageSize: 1,
+      pageSize: 2,
       viewPermission: true,
       editPermission: true,
       deletePermission: true,
@@ -229,17 +231,19 @@ export default {
     this.getList()
   },
   methods: {
+    getStatus(val){
+      return Util.getStatus(val)
+    },
     onClickPagination(){
       console.log('onClickPagination', this.$data.page)
       this.getList()
     },
     viewDetails(item){
       console.log(item)
-      console.log(item.userId)
       this.$store.commit('setUserDetail',
         {
           id: item.userId,
-          mode: 'View'
+          mode: Const.MODE_VIEW
         }
       )
       this.$router.push({ name: 'userDetails' })
@@ -251,7 +255,7 @@ export default {
       this.$store.commit('setUserDetail',
         {
           id: item.userId,
-          mode: 'Edit'
+          mode: Const.MODE_EDIT
         }
       )
       this.$router.push({ name: 'userDetails' })
@@ -290,7 +294,7 @@ export default {
       this.$store.commit('setUserDetail',
         {
           id: 1,
-          mode: 'Create'
+          mode: Const.MODE_CREATE
         }
       )
       this.$router.push({ name: 'userDetails' })
@@ -337,7 +341,8 @@ export default {
 
       const {
         currentSort,
-        page
+        page,
+        pageSize
       } = this.$data
 
       let url = "user/getUserList"
@@ -345,52 +350,27 @@ export default {
 
 
       if(userName != '' && userName != null){
-        url = this.checkFirstAPIParam(url, originalUrl, "userName", userName)
+        url = Util.genAPIParamQuery(url, originalUrl, "userName", userName)
       }
       if(firstName != '' && firstName != null){
-        url = this.checkFirstAPIParam(url, originalUrl, "firstName", firstName)
+        url = Util.genAPIParamQuery(url, originalUrl, "firstName", firstName)
       }
       if(lastName != '' && lastName != null){
-        url = this.checkFirstAPIParam(url, originalUrl, "lastName", lastName)
+        url = Util.genAPIParamQuery(url, originalUrl, "lastName", lastName)
       }
       if(groupId != null){
-        url = this.checkFirstAPIParam(url, originalUrl, "groupId", groupId)
+        url = Util.genAPIParamQuery(url, originalUrl, "groupId", groupId)
       }
       if(currentSort != '' || currentSort == null){
-        url = this.checkFirstAPIParam(url, originalUrl, "sortKey", currentSort.name + ":" + currentSort.type)
+        url = Util.genAPIParamQuery(url, originalUrl, "sortKey", currentSort.name + ":" + currentSort.type)
       }
 
-      // temp
-      // if(page != 1){
-      //   if(isFirst){
-      //     url += "?"
-      //     isFirst = false
-      //   } else { 
-      //     url += "&"
-      //   }
-      //   url += "pageNumber=" + page
-      // }
+      url = Util.genAPIParamQuery(url, originalUrl, "pageNumber", page)
       
-      // if(isFirst){
-      //   url += "?"
-      //   isFirst = false
-      // } else { 
-      //   url += "&"
-      // }
-      // url += "pageSize=" + this.$data.pageSize
-      // temp
+      url = Util.genAPIParamQuery(url, originalUrl, "pageSize", pageSize)
 
       console.log(url)
       this.getListAPI(url, currentSort, page)
-    },
-    checkFirstAPIParam(url, originalUrl, param, val){
-      
-      if(url == originalUrl){
-        this.$data.isFirstAPIParam = false
-        return url += "?" + param + "=" + val
-      } else {
-        return url += "&" + param + "=" + val
-      }
     },
     setPagination(totalCount){
       this.$data.totalPages = Math.ceil(totalCount/this.$data.pageSize)

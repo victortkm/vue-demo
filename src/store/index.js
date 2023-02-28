@@ -1,10 +1,11 @@
 import { createStore } from 'vuex'
+import Const from '../constant'
 
 export default createStore({
   state: {
     userDetail: {
       id: 27,
-      mode: 'View'
+      mode: Const.MODE_VIEW
     },
     count: 322
   },
