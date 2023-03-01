@@ -209,7 +209,7 @@ export default {
       items: [],
       page: 1,
       totalPages: 1,
-      pageSize: 2,
+      pageSize: 5,
       viewPermission: true,
       editPermission: true,
       deletePermission: true,

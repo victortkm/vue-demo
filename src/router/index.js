@@ -6,6 +6,8 @@ import UserView from '../views/UserView'
 import GroupListView from '../views/GroupListView'
 import GroupView from '../views/GroupView'
 import SettingView from '../views/SettingView'
+import PendingApprovalListView from '../views/PendingApprovalListView'
+import PendingApprovalView from '../views/PendingApprovalView'
 
 const routes = [
   {
@@ -21,6 +23,16 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     // component: () => import(/* webpackChunkName: "about" */ '../views/AboutView/index.vue')
     component: AboutView
+  },
+  {
+    path: '/pendApprListing',
+    name: 'pendApprListing',
+    component: PendingApprovalListView
+  },
+  {
+    path: '/pendApprDetails',
+    name: 'pendApprDetails',
+    component: PendingApprovalView
   },
   {
     path: '/userListing',

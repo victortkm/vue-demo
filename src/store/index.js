@@ -7,7 +7,13 @@ export default createStore({
       id: 27,
       mode: Const.MODE_VIEW
     },
-    count: 322
+    count: 322,
+    pendDetail: {
+      changeMode: Const.MODE_APPROVE_REJECT,
+      docType: Const.WFL_TYPE_USR,
+      docId: 1,
+      jobId: 1
+    }
   },
   getters: {
     getCount(state){
@@ -15,6 +21,9 @@ export default createStore({
     },
     getUserDeta(state){
       return state.userDetail
+    },
+    getPendDetailDeta(state){
+      return state.pendDetail
     }
   },
   mutations: {
@@ -24,6 +33,10 @@ export default createStore({
     setUserDetail(state, item){
       console.log("item",item)
       state.userDetail = item
+    },
+    setPendDetailDeta(state, item){
+      console.log("item",item)
+      state.pendDetail = item
     }
   },
   actions: {

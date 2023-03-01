@@ -1,3 +1,4 @@
+import Const from '../constant'
 
 function concatAPIString(url, param, val, isFirstParam) {
   let symbol = "&"
@@ -28,8 +29,39 @@ function getStatus(val){
   }
 }
 
+function getChangeMode(val){
+  switch(val){
+    case Const.WFL_MODE_NEW:
+      return Const.MODE_NEW
+    case Const.WFL_MODE_EDIT:
+      return Const.MODE_EDIT
+    case Const.WFL_MODE_DELETE:
+      return Const.MODE_DELETE
+    default:
+      return val
+  }
+}
+function getWflType(val){
+  switch(val){
+    case Const.WFL_TYPE_GRP:
+      return Const.WFL_TYPE_STRING_GRP
+    case Const.WFL_TYPE_FNC:
+      return Const.WFL_TYPE_STRING_FNC
+    case Const.WFL_TYPE_GPFC:
+      return Const.WFL_TYPE_STRING_GPFC
+    case Const.WFL_TYPE_USR:
+      return Const.WFL_TYPE_STRING_USR
+    case Const.WFL_TYPE_FCC:
+      return Const.WFL_TYPE_STRING_FCC
+    default:
+      return val
+  }
+}
+
 export default {
   concatAPIString: concatAPIString,
   genAPIParamQuery: genAPIParamQuery,
-  getStatus: getStatus
+  getStatus: getStatus,
+  getChangeMode: getChangeMode,
+  getWflType: getWflType
 }
