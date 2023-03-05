@@ -73,17 +73,18 @@
       </div>
     </div>
 
-
-    <div class="details-bot-div" v-if="this.$data.mode == MOD_VIEW">
-      <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
-    </div>
-    <div class="details-bot-div" v-else-if="this.$data.mode == MODE_CREATE">
-      <v-btn class="btn-normal">Back</v-btn>
-      <v-btn class="btn-create" @click="onCreateUser()">Create</v-btn>
-    </div>
-    <div class="details-bot-div" v-else>
-      <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
-      <v-btn class="btn-edit">Edit</v-btn>
+    <div v-if="this.$data.mode != MODE_APPROVE_REJECT">
+      <div class="details-bot-div" v-if="this.$data.mode == MOD_VIEW">
+        <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
+      </div>
+      <div class="details-bot-div" v-else-if="this.$data.mode == MODE_CREATE">
+        <v-btn class="btn-normal">Back</v-btn>
+        <v-btn class="btn-create" @click="onCreateUser()">Create</v-btn>
+      </div>
+      <div class="details-bot-div" v-else>
+        <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
+        <v-btn class="btn-edit">Edit</v-btn>
+      </div>
     </div>
 
     
@@ -126,6 +127,7 @@ export default {
       MOD_VIEW: Const.MODE_VIEW,
       MODE_CREATE: Const.MODE_CREATE,
       MODE_EDIT: Const.MODE_EDIT,
+      MODE_APPROVE_REJECT: Const.MODE_APPROVE_REJECT,
 
       mode: Const.MODE_VIEW,
       isEditable: false,
@@ -162,7 +164,7 @@ export default {
     onCreateMounted(){
     },
     getDetails() {
-      this.axios.get("user/getUserDetails?userId=" + this.$store.getters.getUserDeta.id).then((response) => {
+      this.axios.get("user/getUserDetails?userId=" + this.$store.getters.getUserDetail.id).then((response) => {
         console.log(response.data.data)
         this.$data.details = response.data.data
       })
@@ -181,12 +183,10 @@ export default {
         lastName: this.$data.details.lastName,
         groupId: this.$data.details.groupId
       }).then((response) => {
-        console.log('test1')
         console.log(response.data.data)
         this.$data.details = response.data.data
         return response.data
       }).then((data) => {
-        console.log('test2')
         console.log(data)
         this.$data.dialog.status = true
 
@@ -200,14 +200,14 @@ export default {
     closeDialog() {
         this.$data.dialog.status = false
         this.$router.push({ name: 'userListing' })
+    },
+    setData(){
+      const userData = this.$store.getters.getUserDetail
+      this.$data.mode = userData.mode
     }
   },
-  mounted(){
-    const userData = this.$store.getters.getUserDeta
-    this.$data.mode = userData.mode
+  async mounted(){
     this.getGroupList()
-    // console.log(this.$data.mode)
-    // console.log(userData)
 
     this.onEditableCheck()
 

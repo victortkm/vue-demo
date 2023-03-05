@@ -219,25 +219,31 @@ export default {
       console.log('onClickPagination', this.$data.page)
       this.getList()
     },
-    viewDetails(item){
-      console.log(item)
-      this.$store.commit('setUserDetail',
-        {
-          id: item.userId,
-          mode: Const.MODE_VIEW
-        }
-      )
-      this.$router.push({ name: 'userDetails' })
-      // this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
+    // viewDetails(item){
+    //   console.log(item)
+    //   this.$store.commit('setUserDetail',
+    //     {
+    //       id: item.userId,
+    //       mode: Const.MODE_VIEW
+    //     }
+    //   )
+    //   this.$router.push({ name: 'userDetails' })
+    //   // this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
 
-    },
+    // },
     editDetails(item){
-      this.$store.commit('setPendDetailDeta',
+      this.$store.commit('setPendDetailData',
         {
           changeMode: Const.MODE_APPROVE_REJECT,
           docType: item.docType,
           docId: item.docId,
           jobId: item.jobId
+        }
+      )
+      this.$store.commit('setUserDetail', 
+        {
+          id: 27,
+          mode: Const.MODE_APPROVE_REJECT
         }
       )
       this.$router.push({ name: 'pendApprDetails' })

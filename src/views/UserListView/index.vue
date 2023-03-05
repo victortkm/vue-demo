@@ -41,10 +41,13 @@
         </div>
         <div class="w-45">
           <v-select
-            :items="search.groupList"
+            :items="groupList"
+            item-title="groupName"
+            item-value="groupId"
             label="Group Name"
             density="compact"
             variant="outlined"
+            v-model="search.groupId"
           />
         </div>
       </div>
@@ -77,8 +80,8 @@
             <div class="table-label-div">
               Username
               <div>
-                <v-icon @click="sortBy({name: 'user_Name', type: 'ASC'})" :icon="iconSort({name: 'user_Name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'user_Name', type: 'DESC'})" :icon="iconSort({name: 'user_Name', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'user_name', type: 'ASC'})" :icon="iconSort({name: 'user_name', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'user_name', type: 'DESC'})" :icon="iconSort({name: 'user_name', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -207,6 +210,7 @@ export default {
   data() {
     return {
       items: [],
+      groupList: [],
       page: 1,
       totalPages: 1,
       pageSize: 5,
@@ -221,7 +225,7 @@ export default {
         userName: '',
         firstName: '',
         lastName: '',
-        groupName: ''
+        groupId: ''
       },
       currentSort: '',
       isFirstAPIParam: true
@@ -229,6 +233,7 @@ export default {
   },
   mounted(){
     this.getList()
+    this.getGroupList()
   },
   methods: {
     getStatus(val){
@@ -287,7 +292,7 @@ export default {
         userName: '',
         firstName: '',
         lastName: '',
-        group: {}
+        groupId: {}
       }
     },
     onCreate(){
@@ -330,7 +335,14 @@ export default {
         this.$data.items = response.data.data.list
         this.setPagination(response.data.data.totalCount, response.data.data.list.pageNumber)
       })
-    },    
+    },
+    getGroupList(){
+      this.axios.get("group/getGroupList").then((response) => {
+        console.log(response.data.data.list)
+        const list = response.data.data.list.filter(obj => obj.status == 'y')
+        this.$data.groupList = list
+      })
+    },
     getList() {
       const {
         userName,
