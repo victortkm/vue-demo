@@ -1,13 +1,13 @@
 <template>
-  <div class="mainbody">
+  <!-- <div class="mainbody"> -->
 
-    <div class="page-title-div">
+    <!-- <div class="page-title-div">
       <h1 class="page-title">Approve/Reject Pending Tasks</h1>
-    </div>
+    </div> -->
 
     <User v-if=" pendDetailData.docType == 'USR'"/>
     <Group v-if=" pendDetailData.docType == 'GRP'"/>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>

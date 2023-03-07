@@ -6,7 +6,7 @@ export default {
   MODE_EDIT: 'Edit',
   MODE_DELETE: 'Delete',
   MODE_NEW: 'New',
-  MODE_APPROVE_REJECT: 'Approve Reject',
+  MODE_APPROVE_REJECT: 'Approve/Reject',
   API_RESPONSE_SUCCESS: 'Success',
 
   WFL_MODE_NEW: 'NEW',

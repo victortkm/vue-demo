@@ -195,6 +195,23 @@
         </div>
       </v-card>
     </v-dialog>
+    
+    <!-- delete response -->
+    <v-dialog
+      v-model="resDialog.status"
+      width="auto"
+    >
+      <v-card>
+        <div class="main-dialog">
+          <v-card-title>
+            {{ resDialog.value }}
+          </v-card-title>
+          <v-card-actions class="dialog-actions-view">
+            <v-btn class="btn-normal" @click="closeResDialog()">Ok</v-btn>
+          </v-card-actions>
+        </div>
+      </v-card>
+    </v-dialog>
 
   </div>
 </template>
@@ -220,6 +237,10 @@ export default {
       dialog: {
         status: false,
         data: null
+      },
+      resDialog: {
+        status: false,
+        value: ''
       },
       search: {
         userName: '',
@@ -247,7 +268,7 @@ export default {
       console.log(item)
       this.$store.commit('setUserDetail',
         {
-          id: item.userId,
+          id: item.userDtlsId,
           mode: Const.MODE_VIEW
         }
       )
@@ -256,22 +277,45 @@ export default {
 
     },
     editDetails(item){
-      console.log(item)
       this.$store.commit('setUserDetail',
         {
-          id: item.userId,
+          id: item.userDtlsId,
           mode: Const.MODE_EDIT
         }
       )
       this.$router.push({ name: 'userDetails' })
     },
     deleteDialog(item){
-      console.log('del',item)
       this.$data.dialog.status = true
       this.$data.dialog.data = item
     },
+    onDelete() {
+      this.axios.delete("user/deleteUser",
+      { 
+        data: {
+        'userId': this.$data.dialog.data.userId,
+        'userIdFrom': 1,
+        },
+        headers: {
+          "content-type": "application/json",
+          "Accept": "application/json"
+        },
+      }).then((response) => {
+        console.log(response.data.data)
+        if(response.data.msg == Const.API_RESPONSE_SUCCESS){
+          this.$data.resDialog.value = 'Succesfully Deleted! Pending Approval'
+        } else {
+          this.$data.resDialog.value = 'Error in Deleting user'
+        }
+        this.closeDialog()
+        this.$data.resDialog.status = true
+      })
+    },
     closeDialog(){
       this.$data.dialog.status = false
+    },
+    closeResDialog(){
+      this.$data.resDialog.status = false
     },
     sortBy(item){
 
@@ -303,9 +347,6 @@ export default {
         }
       )
       this.$router.push({ name: 'userDetails' })
-    },
-    onDelete() {
-
     },
     iconSort(obj){
       // console.log('iconsort',obj, this.$data.currentSort)

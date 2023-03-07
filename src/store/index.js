@@ -4,7 +4,7 @@ import Const from '../constant'
 export default createStore({
   state: {
     userDetail: {
-      id: 27,
+      id: 31,
       mode: Const.MODE_VIEW
     },
     groupDetail: {
@@ -38,7 +38,7 @@ export default createStore({
       state.count++
     },
     setUserDetail(state, item){
-      console.log("item",item)
+      console.log("setUserDetail item",item)
       state.userDetail = item
     },
     setGroupDetail(state, item){

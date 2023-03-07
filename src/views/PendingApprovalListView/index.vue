@@ -77,6 +77,15 @@
               </div>
             </div>
           </th>
+          <th class="text-left w-15">
+            <div class="table-label-div">
+              Key Value
+              <div>
+                <v-icon @click="sortBy({name: 'key_value', type: 'ASC'})" :icon="iconSort({name: 'key_value', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'key_value', type: 'DESC'})" :icon="iconSort({name: 'key_value', type: 'DESC'})" size="large"/>
+              </div>
+            </div>
+          </th>
           <th class="text-left w-10">
             <div class="table-label-div">
               Change Mode
@@ -119,6 +128,7 @@
           <td>{{ item.jobId }}</td>
           <td>{{ item.docId }}</td>
           <td>{{ getWflType(item.docType) }}</td>
+          <td>{{ item.keyValue }}</td>
           <td>{{ getChangeMode(item.changeMode) }}</td>
           <td>{{ item.createdBy }}</td>
           <td>{{ item.updatedTime }}</td>
@@ -242,7 +252,7 @@ export default {
       )
       this.$store.commit('setUserDetail', 
         {
-          id: 27,
+          id: item.docId,
           mode: Const.MODE_APPROVE_REJECT
         }
       )
@@ -291,7 +301,7 @@ export default {
       this.axios.get(url).then((response) => {
         console.log(response.data.data)
         this.$data.items = response.data.data.list
-        // this.setPagination(response.data.data.totalCount, response.data.data.list.pageNumber)
+        this.setPagination(response.data.data.totalCount, response.data.data.list.pageNumber)
       })
     },    
     getList() {

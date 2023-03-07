@@ -78,12 +78,12 @@
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
       </div>
       <div class="details-bot-div" v-else-if="this.$data.mode == MODE_CREATE">
-        <v-btn class="btn-normal">Back</v-btn>
+        <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
         <v-btn class="btn-create" @click="onCreateUser()">Create</v-btn>
       </div>
       <div class="details-bot-div" v-else>
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
-        <v-btn class="btn-edit">Edit</v-btn>
+        <v-btn class="btn-edit" @click="onEditUser()">Edit</v-btn>
       </div>
     </div>
 
@@ -164,10 +164,23 @@ export default {
     onCreateMounted(){
     },
     getDetails() {
-      this.axios.get("user/getUserDetails?userId=" + this.$store.getters.getUserDetail.id).then((response) => {
-        console.log(response.data.data)
-        this.$data.details = response.data.data
-      })
+
+      // if Approve/Reject then query by pending dtls id
+      if(this.$data.mode == Const.MODE_APPROVE_REJECT){
+        const url = "user/getUserDetails?userDtlsId=" + this.$store.getters.getUserDetail.id + "&isPend=true"
+        console.log(url)
+        this.axios.get().then((response) => {
+          console.log(response.data.data)
+          this.$data.details = response.data.data
+        })
+      } else {
+        const url = "user/getUserDetails?userDtlsId="+ this.$store.getters.getUserDetail.id
+        console.log(url)
+        this.axios.get(url).then((response) => {
+          console.log(response.data.data)
+          this.$data.details = response.data.data
+        })
+      }
     },
     getGroupList(){
       this.axios.get("group/getGroupList").then((response) => {
@@ -197,6 +210,28 @@ export default {
         }
       })
     },
+    onEditUser() {
+      this.axios.put("user/updateUser", {
+        userId: this.$data.details.userId,
+        userName: this.$data.details.userName,
+        firstName: this.$data.details.firstName,
+        lastName: this.$data.details.lastName,
+        groupId: this.$data.details.groupId
+      }).then((response) => {
+        console.log(response.data.data)
+        this.$data.details = response.data.data
+        return response.data
+      }).then((data) => {
+        console.log(data)
+        this.$data.dialog.status = true
+
+        if(data.msg == Const.API_RESPONSE_SUCCESS){
+          this.$data.dialog.value = 'Succesfully edited!'
+        } else {
+          this.$data.dialog.value = 'Error in editing user'
+        }
+      })
+    },
     closeDialog() {
         this.$data.dialog.status = false
         this.$router.push({ name: 'userListing' })
@@ -207,6 +242,7 @@ export default {
     }
   },
   async mounted(){
+    this.setData()
     this.getGroupList()
 
     this.onEditableCheck()
