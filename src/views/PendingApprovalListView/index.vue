@@ -252,7 +252,7 @@ export default {
       )
       this.$store.commit('setUserDetail', 
         {
-          id: item.docId,
+          dtlsId: item.docId,
           mode: Const.MODE_APPROVE_REJECT
         }
       )

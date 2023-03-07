@@ -166,6 +166,22 @@ tbody tr:nth-child(odd) {
   border-width: 1px !important;
 }
 
+.btn-delete {
+  background-color: #f06868 !important;
+  font-weight: bolder !important;
+  border-radius: 5px !important;
+  border-color: black !important;
+  border-width: 1px !important;
+}
+
+.btn-approve {
+  background-color: #6ff739 !important;
+  font-weight: bolder !important;
+  border-radius: 5px !important;
+  border-color: black !important;
+  border-width: 1px !important;
+}
+
 .btn-normal {
   font-weight: bolder !important;
   border-radius: 5px !important;

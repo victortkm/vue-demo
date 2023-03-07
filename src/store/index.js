@@ -4,11 +4,11 @@ import Const from '../constant'
 export default createStore({
   state: {
     userDetail: {
-      id: 31,
+      dtlsId: 32,
       mode: Const.MODE_VIEW
     },
     groupDetail: {
-      id: 7,
+      dtlsId: 7,
       mode: Const.MODE_VIEW
     },
     count: 322,

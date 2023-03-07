@@ -73,13 +73,18 @@
       </div>
     </div>
 
-    <div v-if="this.$data.mode != MODE_APPROVE_REJECT">
+    <div>
       <div class="details-bot-div" v-if="this.$data.mode == MOD_VIEW">
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
       </div>
       <div class="details-bot-div" v-else-if="this.$data.mode == MODE_CREATE">
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
         <v-btn class="btn-create" @click="onCreateUser()">Create</v-btn>
+      </div>
+      <div class="details-bot-div" v-else-if="this.$data.mode == MODE_APPROVE_REJECT">
+        <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
+        <v-btn class="btn-delete" @click="onCreateUser()">Reject</v-btn>
+        <v-btn class="btn-approve" @click="onCreateUser()">Approve</v-btn>
       </div>
       <div class="details-bot-div" v-else>
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
@@ -157,34 +162,29 @@ export default {
       this.$router.go(-1)
     },
     onEditableCheck(){
-      if(this.$data.mode != Const.MODE_VIEW){
+      if(
+        this.$data.mode != Const.MODE_VIEW &&
+        this.$data.mode != Const.MODE_APPROVE_REJECT
+      ){
         this.$data.isEditable = true
       }
     },
     onCreateMounted(){
     },
     getDetails() {
-
+      let url = "user/getUserDetails?userDtlsId="+ this.$store.getters.getUserDetail.dtlsId
       // if Approve/Reject then query by pending dtls id
       if(this.$data.mode == Const.MODE_APPROVE_REJECT){
-        const url = "user/getUserDetails?userDtlsId=" + this.$store.getters.getUserDetail.id + "&isPend=true"
-        console.log(url)
-        this.axios.get().then((response) => {
-          console.log(response.data.data)
-          this.$data.details = response.data.data
-        })
-      } else {
-        const url = "user/getUserDetails?userDtlsId="+ this.$store.getters.getUserDetail.id
-        console.log(url)
-        this.axios.get(url).then((response) => {
-          console.log(response.data.data)
-          this.$data.details = response.data.data
-        })
+        url += "&isPend=true"
       }
+      console.log(url)
+      this.axios.get(url).then((response) => {
+        console.log(response.data.data)
+        this.$data.details = response.data.data
+      })
     },
     getGroupList(){
       this.axios.get("group/getGroupList").then((response) => {
-        console.log(response.data.data.list)
         const list = response.data.data.list.filter(obj => obj.status == 'y')
         this.$data.groupList = list
       })
@@ -244,7 +244,6 @@ export default {
   async mounted(){
     this.setData()
     this.getGroupList()
-
     this.onEditableCheck()
 
     if(this.$data.mode != Const.MODE_CREATE){

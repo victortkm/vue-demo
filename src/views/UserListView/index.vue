@@ -268,7 +268,7 @@ export default {
       console.log(item)
       this.$store.commit('setUserDetail',
         {
-          id: item.userDtlsId,
+          dtlsId: item.userDtlsId,
           mode: Const.MODE_VIEW
         }
       )
@@ -279,7 +279,7 @@ export default {
     editDetails(item){
       this.$store.commit('setUserDetail',
         {
-          id: item.userDtlsId,
+          dtlsId: item.userDtlsId,
           mode: Const.MODE_EDIT
         }
       )
@@ -342,7 +342,7 @@ export default {
     onCreate(){
       this.$store.commit('setUserDetail',
         {
-          id: 1,
+          dtlsId: 1,
           mode: Const.MODE_CREATE
         }
       )
