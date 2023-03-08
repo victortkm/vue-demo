@@ -307,6 +307,7 @@ export default {
         } else {
           this.$data.resDialog.value = 'Error in Deleting user'
         }
+        this.getList()
         this.closeDialog()
         this.$data.resDialog.status = true
       })

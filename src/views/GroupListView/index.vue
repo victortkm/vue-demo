@@ -115,6 +115,46 @@
         @click="onClickPagination"
       />
     </div>
+    
+    
+    <!-- delete dialog -->
+    <v-dialog
+      v-model="dialog.status"
+      width="auto"
+    >
+      <v-card>
+        <div class="main-dialog">
+          <v-card-title>
+            Delete User
+          </v-card-title>
+          <v-card-text>
+            Are you sure you want to delete {{ dialog.data.userName }}?
+          </v-card-text>
+          <v-card-actions class="dialog-actions-view">
+            <v-btn class="btn-normal" @click="closeDialog()">Cancel</v-btn>
+            <v-btn class="btn-delete" @click="onDelete()">Delete</v-btn>
+          </v-card-actions>
+        </div>
+      </v-card>
+    </v-dialog>
+    
+    <!-- delete response -->
+    <v-dialog
+      v-model="resDialog.status"
+      width="auto"
+    >
+      <v-card>
+        <div class="main-dialog">
+          <v-card-title>
+            {{ resDialog.value }}
+          </v-card-title>
+          <v-card-actions class="dialog-actions-view">
+            <v-btn class="btn-normal" @click="closeResDialog()">Ok</v-btn>
+          </v-card-actions>
+        </div>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
@@ -140,6 +180,10 @@ export default {
         status: false,
         data: null
       },
+      resDialog: {
+        status: false,
+        value: ''
+      },
       search: {
         groupName: ''
       },
@@ -162,7 +206,7 @@ export default {
       console.log(item)
       this.$store.commit('setGroupDetail',
         {
-          id: item.groupId,
+          id: item.groupDtlsId,
           mode: Const.MODE_VIEW
         }
       )
@@ -173,19 +217,21 @@ export default {
       console.log(item)
       this.$store.commit('setGroupDetail',
         {
-          id: item.userId,
+          id: item.groupDtlsId,
           mode: Const.MODE_EDIT
         }
       )
       this.$router.push({ name: 'groupDetails' })
     },
     deleteDialog(item){
-      console.log('del',item)
       this.$data.dialog.status = true
       this.$data.dialog.data = item
     },
     closeDialog(){
       this.$data.dialog.status = false
+    },
+    closeResDialog(){
+      this.$data.resDialog.status = false
     },
     sortBy(item){
 
@@ -216,7 +262,26 @@ export default {
       this.$router.push({ name: 'groupDetails' })
     },
     onDelete() {
-
+      this.axios.delete("group/deleteGroup",
+      { 
+        data: {
+        'groupId': this.$data.dialog.data.groupId,
+        'userId': 1,
+        },
+        headers: {
+          "content-type": "application/json",
+          "Accept": "application/json"
+        },
+      }).then((response) => {
+        console.log(response.data.data)
+        if(response.data.msg == Const.API_RESPONSE_SUCCESS){
+          this.$data.resDialog.value = 'Succesfully Deleted! Pending Approval'
+        } else {
+          this.$data.resDialog.value = 'Error in Deleting group'
+        }
+        this.closeDialog()
+        this.$data.resDialog.status = true
+      })
     },
     iconSort(obj){
       // console.log('iconsort',obj, this.$data.currentSort)

@@ -83,8 +83,8 @@
       </div>
       <div class="details-bot-div" v-else-if="this.$data.mode == MODE_APPROVE_REJECT">
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
-        <v-btn class="btn-delete" @click="onCreateUser()">Reject</v-btn>
-        <v-btn class="btn-approve" @click="onCreateUser()">Approve</v-btn>
+        <v-btn class="btn-delete" @click="onRejectUser()">Reject</v-btn>
+        <v-btn class="btn-approve" @click="onApproveUser()">Approve</v-btn>
       </div>
       <div class="details-bot-div" v-else>
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
@@ -232,9 +232,47 @@ export default {
         }
       })
     },
+    onRejectUser(){
+      this.axios.put("user/changeStatus", {
+        userId: 1,
+        jobId: this.$store.getters.getPendDetailData.jobId,
+        actionCode: Const.CHANGE_STATUS_REJECT
+      }).then((response) => {
+        console.log(response.data.data)
+        return response.data
+      }).then((data) => {
+        console.log(data)
+        this.$data.dialog.status = true
+
+        if(data.msg == Const.API_RESPONSE_SUCCESS){
+          this.$data.dialog.value = 'Succesfully Rejected!'
+        } else {
+          this.$data.dialog.value = 'Error in rejecting user'
+        }
+      })
+    },
+    onApproveUser(){
+      this.axios.put("user/changeStatus", {
+        userId: 1,
+        jobId: this.$store.getters.getPendDetailData.jobId,
+        actionCode: Const.CHANGE_STATUS_APPROVE
+      }).then((response) => {
+        console.log(response.data.data)
+        return response.data
+      }).then((data) => {
+        console.log(data)
+        this.$data.dialog.status = true
+
+        if(data.msg == Const.API_RESPONSE_SUCCESS){
+          this.$data.dialog.value = 'Succesfully Approved!'
+        } else {
+          this.$data.dialog.value = 'Error in approving user'
+        }
+      })
+    },
     closeDialog() {
         this.$data.dialog.status = false
-        this.$router.push({ name: 'userListing' })
+        this.onBack()
     },
     setData(){
       const userData = this.$store.getters.getUserDetail
