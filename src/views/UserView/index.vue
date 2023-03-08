@@ -162,14 +162,7 @@ export default {
       this.$router.go(-1)
     },
     onEditableCheck(){
-      if(
-        this.$data.mode != Const.MODE_VIEW &&
-        this.$data.mode != Const.MODE_APPROVE_REJECT
-      ){
-        this.$data.isEditable = true
-      }
-    },
-    onCreateMounted(){
+      this.$data.isEditable = Util.onEditableCheck(this.$data.mode)
     },
     getDetails() {
       let url = "user/getUserDetails?userDtlsId="+ this.$store.getters.getUserDetail.dtlsId

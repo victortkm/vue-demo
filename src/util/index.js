@@ -58,10 +58,23 @@ function getWflType(val){
   }
 }
 
+function onEditableCheck(val){
+  if(
+    val != Const.MODE_VIEW &&
+    val != Const.MODE_APPROVE_REJECT
+  ){
+    return true
+  } else {
+    return false
+  }
+
+}
+
 export default {
   concatAPIString: concatAPIString,
   genAPIParamQuery: genAPIParamQuery,
   getStatus: getStatus,
   getChangeMode: getChangeMode,
-  getWflType: getWflType
+  getWflType: getWflType,
+  onEditableCheck: onEditableCheck
 }
