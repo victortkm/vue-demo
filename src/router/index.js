@@ -66,4 +66,56 @@ const router = createRouter({
   routes
 })
 
+export const NavRoutes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    title: 'Home',
+    icon: 'mdi-view-dashboard',
+  },
+  {
+    path: '/pendApprListing',
+    name: 'pendApprListing',
+    component: PendingApprovalListView,
+    title: 'Pending Approval List',
+    icon: 'mdi-view-dashboard',
+  },
+  {
+    path: '/pendApprDetails',
+    name: 'pendApprDetails',
+    component: PendingApprovalView,
+    title: 'Pending Approval',
+    icon: 'mdi-view-dashboard',
+  },
+  {
+    path: '/userListing',
+    name: 'userListing',
+    component: UserListView,
+    title: 'User Listing',
+    icon: 'mdi-view-dashboard',
+  },
+  {
+    path: '/userDetails',
+    name: 'userDetails',
+    component: UserView,
+    title: 'User Details',
+    icon: 'mdi-view-dashboard',
+  },
+  {
+    path: '/groupListing',
+    name: 'groupListing',
+    component: GroupListView,
+    title: 'Group Listing',
+    icon: 'mdi-view-dashboard',
+  },
+  {
+    path: '/groupDetails',
+    name: 'groupDetails',
+    component: GroupView,
+    title: 'Group Details',
+    icon: 'mdi-vuetify',
+  },
+]
+
 export default router
