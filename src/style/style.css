@@ -215,6 +215,30 @@ tbody tr:nth-child(odd) {
   align-items: center;
 }
 
+.func-cat-main {
+  display: flex;
+  justify-content:flex-start;
+  align-items: flex-start;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.func-cat-container {
+  margin: 0px;
+  height: '100%' !important;
+  /* background-color: red; */
+  
+}
+
+.func-cat-card {
+  padding: 10px !important
+}
+
+.func-cat-checkbox {
+  text-align: start;
+  padding: 0px;
+}
+
 .display-none {
   display: none;
 }

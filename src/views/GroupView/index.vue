@@ -1,6 +1,130 @@
 <template>
   <div class="mainbody">
-    <h1>Group Details</h1>
+
+    <div class="page-title-div">
+      <h1 class="page-title">{{ mode }} Group Details</h1>
+    </div>
+    
+    <div class="details-div">
+      <div class="details-row">
+        <div class="w-45">
+          <v-text-field
+            label="Group ID"
+            density="compact"
+            variant="outlined"
+            v-model="this.$data.details.groupId"
+            readonly
+            />
+        </div>
+        <div class="w-45">
+          <v-text-field
+            label="Group Name"
+            density="compact"
+            variant="outlined"
+            v-model="this.$data.details.groupName"
+            :readonly="!isEditable"
+            />
+        </div>
+      </div>
+      <div class="details-row">
+        <div class="w-45">
+          <v-text-field
+            label="Status"
+            density="compact"
+            variant="outlined"
+            v-model="getStatus"
+            readonly
+            v-if="mode != MODE_CREATE"
+            />
+        </div>
+        <div class="w-45">
+        </div>
+      </div>
+      
+      <v-container>
+        <h3 style="text-align: start;">Functions</h3>
+        <v-row
+          align="start"
+          no-gutters
+        >
+          <view
+            class="pa-2 func-cat-container w-20"
+            v-for="funcCat in functionList"
+            :key="funcCat.funcCatId"
+          >
+            <v-card
+              class="func-cat-card flex-grow-1"
+              :title="funcCat.categoryName"
+              variant="outlined">
+              <v-checkbox
+                v-for="func in funcCat.funcList"
+                :key="func.functionDtlsId"
+                class="func-cat-checkbox"
+                density="compact"
+                color="blue"
+                v-model="details.functionIds"
+                :label="func.functionName"
+                :value="func.functionId"
+                :readonly="!isEditable"
+                />
+              <!-- <v-checkbox class="func-cat-checkbox" label="xxxxxxxxxxxxxxxxxxxxxxxxx"></v-checkbox> -->
+            </v-card>
+          </view>
+        </v-row>
+      </v-container>
+
+      <!-- <div class="func-cat-main">
+        <v-card
+          v-for="func in functionList"
+          :key="func.categoryName"
+          class="w-25 func-cat-container"
+          :title="func.categoryName"
+          variant="outlined">
+          <v-checkbox label="Checkbox"></v-checkbox>
+        </v-card>
+      </div> -->
+
+    </div>
+
+
+    <div>
+      <div class="details-bot-div" v-if="this.$data.mode == MOD_VIEW">
+        <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
+      </div>
+      <div class="details-bot-div" v-else-if="this.$data.mode == MODE_CREATE">
+        <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
+        <v-btn class="btn-create" @click="onCreateGroup()">Create</v-btn>
+      </div>
+      <div class="details-bot-div" v-else-if="this.$data.mode == MODE_APPROVE_REJECT">
+        <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
+        <v-btn class="btn-delete" @click="onRejectGroup()">Reject</v-btn>
+        <v-btn class="btn-approve" @click="onApproveGroup()">Approve</v-btn>
+      </div>
+      <div class="details-bot-div" v-else>
+        <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
+        <v-btn class="btn-edit" @click="onEditGroup()">Edit</v-btn>
+      </div>
+    </div>
+
+    <v-dialog
+      v-model="dialog.status"
+      width="auto"
+    >
+      <v-card>
+        <div class="main-dialog">
+          <v-card-title>
+            {{ mode }} Group
+          </v-card-title>
+          <v-card-text>
+            {{ dialog.value }}
+          </v-card-text>
+          <v-card-actions class="dialog-actions-view">
+            <v-btn class="btn-normal" @click="closeDialog()">Ok</v-btn>
+          </v-card-actions>
+        </div>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
@@ -149,6 +273,8 @@ export default {
     setData(){
       const groupData = this.$store.getters.getGroupDetail
       this.$data.mode = groupData.mode
+    },
+    test(){
     }
   },
   async mounted(){
@@ -157,7 +283,7 @@ export default {
     this.onEditableCheck()
 
     if(this.$data.mode != Const.MODE_CREATE){
-      // this.getDetails()
+      this.getDetails()
     }
   }
 }

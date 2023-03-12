@@ -128,7 +128,7 @@
             Delete User
           </v-card-title>
           <v-card-text>
-            Are you sure you want to delete {{ dialog.data.userName }}?
+            Are you sure you want to delete {{ dialog.data.groupName }}?
           </v-card-text>
           <v-card-actions class="dialog-actions-view">
             <v-btn class="btn-normal" @click="closeDialog()">Cancel</v-btn>
@@ -206,7 +206,7 @@ export default {
       console.log(item)
       this.$store.commit('setGroupDetail',
         {
-          id: item.groupDtlsId,
+          dtlsId: item.groupDtlsId,
           mode: Const.MODE_VIEW
         }
       )
@@ -217,7 +217,7 @@ export default {
       console.log(item)
       this.$store.commit('setGroupDetail',
         {
-          id: item.groupDtlsId,
+          dtlsId: item.groupDtlsId,
           mode: Const.MODE_EDIT
         }
       )

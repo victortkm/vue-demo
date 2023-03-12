@@ -242,18 +242,39 @@ export default {
 
     // },
     editDetails(item){
+      switch(item.docType){
+        case Const.WFL_TYPE_GRP:        
+          this.$store.commit('setGroupDetail', 
+            {
+              dtlsId: item.docId,
+              mode: Const.MODE_APPROVE_REJECT
+            }
+          )
+          break
+
+        case Const.WFL_TYPE_FNC:
+          break
+
+        case Const.WFL_TYPE_USR:
+          this.$store.commit('setUserDetail', 
+            {
+              dtlsId: item.docId,
+              mode: Const.MODE_APPROVE_REJECT
+            }
+          )
+          break
+
+        case Const.WFL_TYPE_FCC:
+          break
+        default:
+
+      }
       this.$store.commit('setPendDetailData',
         {
           changeMode: Const.MODE_APPROVE_REJECT,
           docType: item.docType,
           docId: item.docId,
           jobId: item.jobId
-        }
-      )
-      this.$store.commit('setUserDetail', 
-        {
-          dtlsId: item.docId,
-          mode: Const.MODE_APPROVE_REJECT
         }
       )
       this.$router.push({ name: 'pendApprDetails' })

@@ -3,6 +3,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: '/vue-demo',
   devServer: {
-    proxy: 'http://localhost:8080'
+    proxy: 'http://localhost:8080',
+    port: 8081
   }
 })
