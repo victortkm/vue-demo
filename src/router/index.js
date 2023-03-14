@@ -5,9 +5,13 @@ import UserListView from '../views/UserListView/index.vue'
 import UserView from '../views/UserView'
 import GroupListView from '../views/GroupListView'
 import GroupView from '../views/GroupView'
-import SettingView from '../views/SettingView'
+// import SettingView from '../views/SettingView'
 import PendingApprovalListView from '../views/PendingApprovalListView'
 import PendingApprovalView from '../views/PendingApprovalView'
+import FunctionListView from '../views/FunctionListView'
+import FunctionView from '../views/FunctionView'
+import FunctionCategoryListView from '../views/FunctionCategoryListView'
+import FunctionCategoryView from '../views/FunctionCategoryView'
 
 const routes = [
   {
@@ -55,9 +59,24 @@ const routes = [
     component: GroupView
   },
   {
-    path: '/settings',
-    name: 'settings',
-    component: SettingView
+    path: '/functionListing',
+    name: 'functionListing',
+    component: FunctionListView
+  },
+  {
+    path: '/functionDetails',
+    name: 'functionDetails',
+    component: FunctionView
+  },
+  {
+    path: '/functionCategoryListing',
+    name: 'functionCategoryListing',
+    component: FunctionCategoryListView
+  },
+  {
+    path: '/functionCategoryDetails',
+    name: 'functionCategoryDetails',
+    component: FunctionCategoryView
   },
 ]
 
@@ -114,6 +133,34 @@ export const NavRoutes = [
     name: 'groupDetails',
     component: GroupView,
     title: 'Group Details',
+    icon: 'mdi-vuetify',
+  },
+  {
+    path: '/functionListing',
+    name: 'functionListing',
+    component: FunctionListView,
+    title: 'Function Listing',
+    icon: 'mdi-vuetify',
+  },
+  {
+    path: '/functionDetails',
+    name: 'functionDetails',
+    component: FunctionView,
+    title: 'Function Details',
+    icon: 'mdi-vuetify',
+  },
+  {
+    path: '/functionCategoryListing',
+    name: 'functionCategoryListing',
+    component: FunctionCategoryListView,
+    title: 'Function Category Listing',
+    icon: 'mdi-vuetify',
+  },
+  {
+    path: '/functionCategoryDetails',
+    name: 'functionCategoryDetails',
+    component: FunctionCategoryView,
+    title: 'Function Category Details',
     icon: 'mdi-vuetify',
   },
 ]

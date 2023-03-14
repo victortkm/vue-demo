@@ -221,7 +221,7 @@ import Util from '../../util'
 import Const from '../../constant'
 
 export default {
-  name: 'UserListView',
+  name: 'FunctionCategoryListView',
   components: {
   },
   data() {
@@ -337,7 +337,7 @@ export default {
         userName: '',
         firstName: '',
         lastName: '',
-        groupId: ''
+        groupId: {}
       }
     },
     onCreate(){

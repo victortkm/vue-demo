@@ -2,7 +2,7 @@
   <div class="mainbody">
 
     <div class="page-title-div">
-      <h1 class="page-title">User Listing</h1>
+      <h1 class="page-title">Function Listing</h1>
       <v-btn class="btn-create" @click="onCreate()">Create New</v-btn>
     </div>
 
@@ -12,42 +12,22 @@
       <div class="filter-row">
         <div class="w-45">
           <v-text-field
-            label="User Name"
+            label="Function Name"
             density="compact"
             variant="outlined"
             clearable
-            v-model="search.userName"
-            />
-        </div>
-        <div class="w-45">
-          <v-text-field
-            label="First Name"
-            density="compact"
-            variant="outlined"
-            clearable
-            v-model="search.firstName"
-            />
-        </div>
-      </div>
-      <div class="filter-row">
-        <div class="w-45">
-          <v-text-field
-            label="Last Name"
-            density="compact"
-            variant="outlined"
-            clearable
-            v-model="search.lastName"
+            v-model="search.functionName"
             />
         </div>
         <div class="w-45">
           <v-select
-            :items="groupList"
-            item-title="groupName"
-            item-value="groupId"
-            label="Group Name"
+            :items="funcCatList"
+            item-title="categoryName"
+            item-value="functionCatId"
+            label="Function Category Name"
             density="compact"
             variant="outlined"
-            v-model="search.groupId"
+            v-model="search.functionCatId"
           />
         </div>
       </div>
@@ -69,46 +49,28 @@
         <tr>
           <th class="text-left w-10">
             <div class="table-label-div">
-              User ID
+              Function ID
               <div>
-                <v-icon @click="sortBy({name: 'demo_user_id', type: 'ASC'})" :icon="iconSort({name: 'demo_user_id', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'demo_user_id', type: 'DESC'})"  :icon="iconSort({name: 'demo_user_id', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'demo_function_id', type: 'ASC'})" :icon="iconSort({name: 'demo_function_id', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'demo_function_id', type: 'DESC'})"  :icon="iconSort({name: 'demo_function_id', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
           <th class="text-left w-15">
             <div class="table-label-div">
-              Username
+              Function Name
               <div>
-                <v-icon @click="sortBy({name: 'user_name', type: 'ASC'})" :icon="iconSort({name: 'user_name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'user_name', type: 'DESC'})" :icon="iconSort({name: 'user_name', type: 'DESC'})" size="large"/>
-              </div>
-            </div>
-          </th>
-          <th class="text-left w-10">
-            <div class="table-label-div">
-              First Name
-              <div>
-                <v-icon @click="sortBy({name: 'first_name', type: 'ASC'})" :icon="iconSort({name: 'first_name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'first_name', type: 'DESC'})" :icon="iconSort({name: 'first_name', type: 'DESC'})" size="large"/>
-              </div>
-            </div>
-          </th>
-          <th class="text-left w-10">
-            <div class="table-label-div">
-              Last Name
-              <div>
-                <v-icon @click="sortBy({name: 'last_name', type: 'ASC'})" :icon="iconSort({name: 'last_name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'last_name', type: 'DESC'})" :icon="iconSort({name: 'last_name', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'function_name', type: 'ASC'})" :icon="iconSort({name: 'function_name', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'function_name', type: 'DESC'})" :icon="iconSort({name: 'function_name', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
           <th class="text-left w-15">
             <div class="table-label-div">
-              Group Name
+              Function Category
               <div>
-                <v-icon @click="sortBy({name: 'group_name', type: 'ASC'})" :icon="iconSort({name: 'group_name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'group_name', type: 'DESC'})" :icon="iconSort({name: 'group_name', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'function_category_name', type: 'ASC'})" :icon="iconSort({name: 'function_category_name', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'function_category_name', type: 'DESC'})" :icon="iconSort({name: 'function_category_name', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -140,13 +102,11 @@
       <tbody>
         <tr
           v-for="item in items"
-          :key="item.userName"
+          :key="item.functionId"
         >
-          <td>{{ item.userId }}</td>
-          <td>{{ item.userName }}</td>
-          <td>{{ item.firstName }}</td>
-          <td>{{ item.lastName }}</td>
-          <td>{{ item.groupName }}</td>
+          <td>{{ item.functionId }}</td>
+          <td>{{ item.functionName }}</td>
+          <td>{{ item.categoryName }}</td>
           <td>{{ getStatus(item.status) }}</td>
           <td>{{ item.updatedTime }}</td>
           <td class="table-action-row">
@@ -183,10 +143,10 @@
       <v-card>
         <div class="main-dialog">
           <v-card-title>
-            Delete User
+            Delete Function
           </v-card-title>
           <v-card-text>
-            Are you sure you want to delete {{ dialog.data.userName }}?
+            Are you sure you want to delete {{ dialog.data.functionName }}?
           </v-card-text>
           <v-card-actions class="dialog-actions-view">
             <v-btn class="btn-normal" @click="closeDialog()">Cancel</v-btn>
@@ -221,13 +181,13 @@ import Util from '../../util'
 import Const from '../../constant'
 
 export default {
-  name: 'UserListView',
+  name: 'FunctionListView',
   components: {
   },
   data() {
     return {
       items: [],
-      groupList: [],
+      funcCatList: [],
       page: 1,
       totalPages: 1,
       pageSize: 5,
@@ -243,10 +203,8 @@ export default {
         value: ''
       },
       search: {
-        userName: '',
-        firstName: '',
-        lastName: '',
-        groupId: ''
+        functionName: '',
+        functionCatId: ''
       },
       currentSort: '',
       isFirstAPIParam: true
@@ -254,7 +212,7 @@ export default {
   },
   mounted(){
     this.getList()
-    this.getGroupList()
+    this.getFunctionCategoryList()
   },
   methods: {
     getStatus(val){
@@ -266,35 +224,34 @@ export default {
     },
     viewDetails(item){
       console.log(item)
-      this.$store.commit('setUserDetail',
+      this.$store.commit('setFunctionDetail',
         {
-          dtlsId: item.userDtlsId,
+          dtlsId: item.functionDtlsId,
           mode: Const.MODE_VIEW
         }
       )
-      this.$router.push({ name: 'userDetails' })
-      // this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
+      this.$router.push({ name: 'functionDetails' })
 
     },
     editDetails(item){
-      this.$store.commit('setUserDetail',
+      this.$store.commit('setFunctionDetail',
         {
-          dtlsId: item.userDtlsId,
+          dtlsId: item.functionDtlsId,
           mode: Const.MODE_EDIT
         }
       )
-      this.$router.push({ name: 'userDetails' })
+      this.$router.push({ name: 'functionDetails' })
     },
     deleteDialog(item){
       this.$data.dialog.status = true
       this.$data.dialog.data = item
     },
     onDelete() {
-      this.axios.delete("user/deleteUser",
+      this.axios.delete("function/deleteFunction",
       { 
         data: {
-        'userId': this.$data.dialog.data.userId,
-        'userIdFrom': 1,
+        'functionId': this.$data.dialog.data.functionId,
+        'userId': 1,
         },
         headers: {
           "content-type": "application/json",
@@ -305,7 +262,7 @@ export default {
         if(response.data.msg == Const.API_RESPONSE_SUCCESS){
           this.$data.resDialog.value = 'Succesfully Deleted! Pending Approval'
         } else {
-          this.$data.resDialog.value = 'Error in Deleting user'
+          this.$data.resDialog.value = 'Error in Deleting function'
         }
         this.getList()
         this.closeDialog()
@@ -334,20 +291,18 @@ export default {
     },
     clear(){
       this.$data.search = {
-        userName: '',
-        firstName: '',
-        lastName: '',
-        groupId: ''
+        functionName: '',
+        functionCatId: ''
       }
     },
     onCreate(){
-      this.$store.commit('setUserDetail',
+      this.$store.commit('setFunctionDetail',
         {
           dtlsId: 1,
           mode: Const.MODE_CREATE
         }
       )
-      this.$router.push({ name: 'userDetails' })
+      this.$router.push({ name: 'functionDetails' })
     },
     iconSort(obj){
       // console.log('iconsort',obj, this.$data.currentSort)
@@ -378,19 +333,17 @@ export default {
         this.setPagination(response.data.data.totalCount, response.data.data.list.pageNumber)
       })
     },
-    getGroupList(){
-      this.axios.get("group/getGroupList").then((response) => {
+    getFunctionCategoryList(){
+      this.axios.get("function/getFunctionCategoryList").then((response) => {
         console.log(response.data.data.list)
         const list = response.data.data.list.filter(obj => obj.status == 'y')
-        this.$data.groupList = list
+        this.$data.funcCatList = list
       })
     },
     getList() {
       const {
-        userName,
-        firstName,
-        lastName,
-        groupId
+        functionName,
+        functionCatId
       } = this.$data.search
 
       const {
@@ -399,21 +352,15 @@ export default {
         pageSize
       } = this.$data
 
-      let url = "user/getUserList"
-      const originalUrl = "user/getUserList"
+      let url = "function/getFunctionList"
+      const originalUrl = "function/getFunctionList"
 
 
-      if(userName != '' && userName != null){
-        url = Util.genAPIParamQuery(url, originalUrl, "userName", userName)
+      if(functionName != '' && functionName != null){
+        url = Util.genAPIParamQuery(url, originalUrl, "functionName", functionName)
       }
-      if(firstName != '' && firstName != null){
-        url = Util.genAPIParamQuery(url, originalUrl, "firstName", firstName)
-      }
-      if(lastName != '' && lastName != null){
-        url = Util.genAPIParamQuery(url, originalUrl, "lastName", lastName)
-      }
-      if(groupId != null){
-        url = Util.genAPIParamQuery(url, originalUrl, "groupId", groupId)
+      if(functionCatId != '' && functionCatId != null ){
+        url = Util.genAPIParamQuery(url, originalUrl, "functionCatId", functionCatId)
       }
       if(currentSort != '' || currentSort == null){
         url = Util.genAPIParamQuery(url, originalUrl, "sortKey", currentSort.name + ":" + currentSort.type)

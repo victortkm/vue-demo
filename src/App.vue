@@ -51,7 +51,7 @@
       prominent
     >
       <v-app-bar-nav-icon :variant="drawer ? text : arrow" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>My files</v-toolbar-title>
+      <v-toolbar-title>Demo App</v-toolbar-title>
       <v-spacer/>
       <v-spacer/>
       <v-spacer/>
