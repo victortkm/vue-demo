@@ -31,11 +31,11 @@
           <v-select
             :items="this.$data.funcCatList"
             item-title="categoryName"
-            item-value="functionCatId"
+            item-value="funcCatId"
             label="Function Category Name"
             density="compact"
             variant="outlined"
-            v-model="this.$data.details.functionCatId"
+            v-model="this.$data.details.funcCatId"
             :readonly="!isEditable"
             :class="{'select-is-not-editable': !isEditable}"
           />
@@ -119,7 +119,7 @@ export default {
       details: {
         functionId: null,
         functionName: '',
-        functionCatId: null,
+        funcCatId: null,
         status: ''
       },
       funcCatList: [],
@@ -163,7 +163,7 @@ export default {
     onCreateFunction() {
       this.axios.post("function/addFunction", {
         functionName: this.$data.details.functionName,
-        functionCatId: this.$data.details.functionCatId
+        funcCatId: this.$data.details.funcCatId
       }).then((response) => {
         console.log(response.data.data)
         this.$data.details = response.data.data
@@ -183,7 +183,7 @@ export default {
       this.axios.put("function/updateFunction", {
         functionId: this.$data.details.functionId,
         functionName: this.$data.details.functionName,
-        functionCatId: this.$data.details.functionCatId
+        funcCatId: this.$data.details.funcCatId
       }).then((response) => {
         console.log(response.data.data)
         this.$data.details = response.data.data

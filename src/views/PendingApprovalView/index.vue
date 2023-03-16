@@ -7,18 +7,21 @@
 
     <User v-if=" pendDetailData.docType == 'USR'"/>
     <Group v-if=" pendDetailData.docType == 'GRP'"/>
+    <Function v-if=" pendDetailData.docType == 'FNC'"/>
   <!-- </div> -->
 </template>
 
 <script>
 import User from '../UserView/index.vue'
 import Group from '../GroupView/index.vue'
+import Function from '../FunctionView/index.vue'
 
 export default {
   name: 'UserView',
   components: {
     User,
-    Group
+    Group,
+    Function
   },
   data() {
     return{

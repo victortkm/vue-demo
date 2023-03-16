@@ -23,11 +23,11 @@
           <v-select
             :items="funcCatList"
             item-title="categoryName"
-            item-value="functionCatId"
+            item-value="funcCatId"
             label="Function Category Name"
             density="compact"
             variant="outlined"
-            v-model="search.functionCatId"
+            v-model="search.funcCatId"
           />
         </div>
       </div>
@@ -204,7 +204,7 @@ export default {
       },
       search: {
         functionName: '',
-        functionCatId: ''
+        funcCatId: ''
       },
       currentSort: '',
       isFirstAPIParam: true
@@ -292,7 +292,7 @@ export default {
     clear(){
       this.$data.search = {
         functionName: '',
-        functionCatId: ''
+        funcCatId: ''
       }
     },
     onCreate(){
@@ -343,7 +343,7 @@ export default {
     getList() {
       const {
         functionName,
-        functionCatId
+        funcCatId
       } = this.$data.search
 
       const {
@@ -359,8 +359,8 @@ export default {
       if(functionName != '' && functionName != null){
         url = Util.genAPIParamQuery(url, originalUrl, "functionName", functionName)
       }
-      if(functionCatId != '' && functionCatId != null ){
-        url = Util.genAPIParamQuery(url, originalUrl, "functionCatId", functionCatId)
+      if(funcCatId != '' && funcCatId != null ){
+        url = Util.genAPIParamQuery(url, originalUrl, "funcCatId", funcCatId)
       }
       if(currentSort != '' || currentSort == null){
         url = Util.genAPIParamQuery(url, originalUrl, "sortKey", currentSort.name + ":" + currentSort.type)
