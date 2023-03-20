@@ -2,7 +2,7 @@
   <div class="mainbody">
 
     <div class="page-title-div">
-      <h1 class="page-title">User Listing</h1>
+      <h1 class="page-title">Function Category Listing</h1>
       <v-btn class="btn-create" @click="onCreate()">Create New</v-btn>
     </div>
 
@@ -12,43 +12,14 @@
       <div class="filter-row">
         <div class="w-45">
           <v-text-field
-            label="User Name"
+            label="Function Category Name"
             density="compact"
             variant="outlined"
             clearable
-            v-model="search.userName"
+            v-model="search.funcCatName"
             />
         </div>
         <div class="w-45">
-          <v-text-field
-            label="First Name"
-            density="compact"
-            variant="outlined"
-            clearable
-            v-model="search.firstName"
-            />
-        </div>
-      </div>
-      <div class="filter-row">
-        <div class="w-45">
-          <v-text-field
-            label="Last Name"
-            density="compact"
-            variant="outlined"
-            clearable
-            v-model="search.lastName"
-            />
-        </div>
-        <div class="w-45">
-          <v-select
-            :items="groupList"
-            item-title="groupName"
-            item-value="groupId"
-            label="Group Name"
-            density="compact"
-            variant="outlined"
-            v-model="search.groupId"
-          />
         </div>
       </div>
 
@@ -69,46 +40,19 @@
         <tr>
           <th class="text-left w-10">
             <div class="table-label-div">
-              User ID
+              Function Category ID
               <div>
-                <v-icon @click="sortBy({name: 'demo_user_id', type: 'ASC'})" :icon="iconSort({name: 'demo_user_id', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'demo_user_id', type: 'DESC'})"  :icon="iconSort({name: 'demo_user_id', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'demo_function_category_id', type: 'ASC'})" :icon="iconSort({name: 'demo_function_category_id', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'demo_function_category_id', type: 'DESC'})"  :icon="iconSort({name: 'demo_function_category_id', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
           <th class="text-left w-15">
             <div class="table-label-div">
-              Username
+              Function Category Name
               <div>
-                <v-icon @click="sortBy({name: 'user_name', type: 'ASC'})" :icon="iconSort({name: 'user_name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'user_name', type: 'DESC'})" :icon="iconSort({name: 'user_name', type: 'DESC'})" size="large"/>
-              </div>
-            </div>
-          </th>
-          <th class="text-left w-10">
-            <div class="table-label-div">
-              First Name
-              <div>
-                <v-icon @click="sortBy({name: 'first_name', type: 'ASC'})" :icon="iconSort({name: 'first_name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'first_name', type: 'DESC'})" :icon="iconSort({name: 'first_name', type: 'DESC'})" size="large"/>
-              </div>
-            </div>
-          </th>
-          <th class="text-left w-10">
-            <div class="table-label-div">
-              Last Name
-              <div>
-                <v-icon @click="sortBy({name: 'last_name', type: 'ASC'})" :icon="iconSort({name: 'last_name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'last_name', type: 'DESC'})" :icon="iconSort({name: 'last_name', type: 'DESC'})" size="large"/>
-              </div>
-            </div>
-          </th>
-          <th class="text-left w-15">
-            <div class="table-label-div">
-              Group Name
-              <div>
-                <v-icon @click="sortBy({name: 'group_name', type: 'ASC'})" :icon="iconSort({name: 'group_name', type: 'ASC'})" size="large"/>
-                <v-icon @click="sortBy({name: 'group_name', type: 'DESC'})" :icon="iconSort({name: 'group_name', type: 'DESC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'function_category_name', type: 'ASC'})" :icon="iconSort({name: 'function_category_name', type: 'ASC'})" size="large"/>
+                <v-icon @click="sortBy({name: 'function_category_name', type: 'DESC'})" :icon="iconSort({name: 'function_category_name', type: 'DESC'})" size="large"/>
               </div>
             </div>
           </th>
@@ -140,13 +84,10 @@
       <tbody>
         <tr
           v-for="item in items"
-          :key="item.userName"
+          :key="item.funcCatName"
         >
-          <td>{{ item.userId }}</td>
-          <td>{{ item.userName }}</td>
-          <td>{{ item.firstName }}</td>
-          <td>{{ item.lastName }}</td>
-          <td>{{ item.groupName }}</td>
+          <td>{{ item.funcCatId }}</td>
+          <td>{{ item.categoryName }}</td>
           <td>{{ getStatus(item.status) }}</td>
           <td>{{ item.updatedTime }}</td>
           <td class="table-action-row">
@@ -183,10 +124,10 @@
       <v-card>
         <div class="main-dialog">
           <v-card-title>
-            Delete User
+            Delete Function Category
           </v-card-title>
           <v-card-text>
-            Are you sure you want to delete {{ dialog.data.userName }}?
+            Are you sure you want to delete {{ dialog.data.funcCatName }}?
           </v-card-text>
           <v-card-actions class="dialog-actions-view">
             <v-btn class="btn-normal" @click="closeDialog()">Cancel</v-btn>
@@ -243,10 +184,7 @@ export default {
         value: ''
       },
       search: {
-        userName: '',
-        firstName: '',
-        lastName: '',
-        groupId: ''
+        funcCatName: ''
       },
       currentSort: '',
       isFirstAPIParam: true
@@ -254,7 +192,6 @@ export default {
   },
   mounted(){
     this.getList()
-    this.getGroupList()
   },
   methods: {
     getStatus(val){
@@ -266,35 +203,34 @@ export default {
     },
     viewDetails(item){
       console.log(item)
-      this.$store.commit('setUserDetail',
+      this.$store.commit('setFunctionCategoryDetail',
         {
-          dtlsId: item.userDtlsId,
+          dtlsId: item.funcCatDtlsId,
           mode: Const.MODE_VIEW
         }
       )
-      this.$router.push({ name: 'userDetails' })
-      // this.$router.push({ name: 'userDetails', params: {foo: 3121}, state: { title123: 'Some Message321' } })
+      this.$router.push({ name: 'functionCategoryDetails' })
 
     },
     editDetails(item){
-      this.$store.commit('setUserDetail',
+      this.$store.commit('setFunctionCategoryDetail',
         {
-          dtlsId: item.userDtlsId,
+          dtlsId: item.funcCatDtlsId,
           mode: Const.MODE_EDIT
         }
       )
-      this.$router.push({ name: 'userDetails' })
+      this.$router.push({ name: 'functionCategoryDetails' })
     },
     deleteDialog(item){
       this.$data.dialog.status = true
       this.$data.dialog.data = item
     },
     onDelete() {
-      this.axios.delete("user/deleteUser",
+      this.axios.delete("function/deleteFunctionCategory",
       { 
         data: {
-        'userId': this.$data.dialog.data.userId,
-        'userIdFrom': 1,
+        'funcCatId': this.$data.dialog.data.funcCatId,
+        'userId': 1,
         },
         headers: {
           "content-type": "application/json",
@@ -305,7 +241,7 @@ export default {
         if(response.data.msg == Const.API_RESPONSE_SUCCESS){
           this.$data.resDialog.value = 'Succesfully Deleted! Pending Approval'
         } else {
-          this.$data.resDialog.value = 'Error in Deleting user'
+          this.$data.resDialog.value = 'Error in Deleting Function Category'
         }
         this.getList()
         this.closeDialog()
@@ -334,20 +270,17 @@ export default {
     },
     clear(){
       this.$data.search = {
-        userName: '',
-        firstName: '',
-        lastName: '',
-        groupId: {}
+        funcCatName: ''
       }
     },
     onCreate(){
-      this.$store.commit('setUserDetail',
+      this.$store.commit('setFunctionCategoryDetail',
         {
           dtlsId: 1,
           mode: Const.MODE_CREATE
         }
       )
-      this.$router.push({ name: 'userDetails' })
+      this.$router.push({ name: 'functionCategoryDetails' })
     },
     iconSort(obj){
       // console.log('iconsort',obj, this.$data.currentSort)
@@ -378,19 +311,9 @@ export default {
         this.setPagination(response.data.data.totalCount, response.data.data.list.pageNumber)
       })
     },
-    getGroupList(){
-      this.axios.get("group/getGroupList").then((response) => {
-        console.log(response.data.data.list)
-        const list = response.data.data.list.filter(obj => obj.status == 'y')
-        this.$data.groupList = list
-      })
-    },
     getList() {
       const {
-        userName,
-        firstName,
-        lastName,
-        groupId
+        funcCatName,
       } = this.$data.search
 
       const {
@@ -399,21 +322,12 @@ export default {
         pageSize
       } = this.$data
 
-      let url = "user/getUserList"
-      const originalUrl = "user/getUserList"
+      let url = "function/getFunctionCategoryList"
+      const originalUrl = "function/getFunctionCategoryList"
 
 
-      if(userName != '' && userName != null){
-        url = Util.genAPIParamQuery(url, originalUrl, "userName", userName)
-      }
-      if(firstName != '' && firstName != null){
-        url = Util.genAPIParamQuery(url, originalUrl, "firstName", firstName)
-      }
-      if(lastName != '' && lastName != null){
-        url = Util.genAPIParamQuery(url, originalUrl, "lastName", lastName)
-      }
-      if(groupId != null){
-        url = Util.genAPIParamQuery(url, originalUrl, "groupId", groupId)
+      if(funcCatName != '' && funcCatName != null){
+        url = Util.genAPIParamQuery(url, originalUrl, "categoryName", funcCatName)
       }
       if(currentSort != '' || currentSort == null){
         url = Util.genAPIParamQuery(url, originalUrl, "sortKey", currentSort.name + ":" + currentSort.type)

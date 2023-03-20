@@ -7,11 +7,14 @@
 
 /* nav */
 .navbar {
-  padding: 0px
+  padding: 0px;
+  background-color: rgb(25, 26, 58) !important;
+  /* background-color: rgb(14, 14, 41) !important; */
+  color: #90CAF9 !important;
 }
 
-.selected-nav-menu {
-  background-color: rgb(0, 50, 124);
+.selected-nav-menu { 
+  background-image: linear-gradient(to right, rgb(71, 78, 165), rgb(50, 54, 114), rgb(36, 39, 80), rgb(23, 25, 53)) !important;
   display: flex;
   /* justify-content: center; */
   align-items: center;
@@ -23,6 +26,7 @@
   /* justify-content: center; */
   align-items: center;
   padding: 10px;
+  width: 100%;
 }
 
 .nav-menu-title {

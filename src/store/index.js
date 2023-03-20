@@ -15,6 +15,10 @@ export default createStore({
       dtlsId: 20,
       mode: Const.MODE_VIEW
     },
+    functionCategoryDetail: {
+      dtlsId: 20,
+      mode: Const.MODE_VIEW
+    },
     count: 322,
     pendDetail: {
       changeMode: Const.MODE_APPROVE_REJECT,
@@ -36,6 +40,9 @@ export default createStore({
     getFunctionDetail(state){
       return state.functionDetail
     },
+    getFunctionCategoryDetail(state){
+      return state.functionCategoryDetail
+    },
     getPendDetailData(state){
       return state.pendDetail
     }
@@ -47,6 +54,10 @@ export default createStore({
     setUserDetail(state, item){
       console.log("setUserDetail item",item)
       state.userDetail = item
+    },
+    setFunctionCategoryDetail(state, item){
+      console.log("setFunctionCategoryDetail item",item)
+      state.functionCategoryDetail = item
     },
     setGroupDetail(state, item){
       console.log("item",item)

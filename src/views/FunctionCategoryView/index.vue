@@ -2,64 +2,31 @@
   <div class="mainbody">
 
     <div class="page-title-div">
-      <h1 class="page-title">{{ mode }} User Details</h1>
+      <h1 class="page-title">{{ mode }} Function Category Details</h1>
     </div>
 
     <div class="details-div">
       <div class="details-row">
         <div class="w-45">
           <v-text-field
-            label="User ID"
+            label="Function Category ID"
             density="compact"
             variant="outlined"
-            v-model="this.$data.details.userId"
+            v-model="this.$data.details.funcCatId"
             readonly
             />
         </div>
         <div class="w-45">
           <v-text-field
-            label="User Name"
+            label="Function Category Name"
             density="compact"
             variant="outlined"
-            v-model="this.$data.details.userName"
+            v-model="this.$data.details.categoryName"
             :readonly="!isEditable"
             />
         </div>
       </div>
       <div class="details-row">
-        <div class="w-45">
-          <v-text-field
-            label="First Name"
-            density="compact"
-            variant="outlined"
-            v-model="this.$data.details.firstName"
-            :readonly="!isEditable"
-            />
-        </div>
-        <div class="w-45">
-          <v-text-field
-            label="Last Name"
-            density="compact"
-            variant="outlined"
-            v-model="this.$data.details.lastName"
-            :readonly="!isEditable"
-            />
-        </div>
-      </div>
-      <div class="details-row">
-        <div class="w-45">
-          <v-select
-            :items="this.$data.groupList"
-            item-title="groupName"
-            item-value="groupId"
-            label="Group Name"
-            density="compact"
-            variant="outlined"
-            v-model="this.$data.details.groupId"
-            :readonly="!isEditable"
-            :class="{'select-is-not-editable': !isEditable}"
-          />
-        </div>
         <div class="w-45">
           <v-text-field
             label="Status"
@@ -70,6 +37,8 @@
             v-if="mode != MODE_CREATE"
             />
         </div>
+        <div class="w-45">
+        </div>
       </div>
     </div>
 
@@ -79,16 +48,16 @@
       </div>
       <div class="details-bot-div" v-else-if="this.$data.mode == MODE_CREATE">
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
-        <v-btn class="btn-create" @click="onCreateUser()">Create</v-btn>
+        <v-btn class="btn-create" @click="onCreateFunctionCategory()">Create</v-btn>
       </div>
       <div class="details-bot-div" v-else-if="this.$data.mode == MODE_APPROVE_REJECT">
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
-        <v-btn class="btn-delete" @click="onRejectUser()">Reject</v-btn>
-        <v-btn class="btn-approve" @click="onApproveUser()">Approve</v-btn>
+        <v-btn class="btn-delete" @click="onRejectFunctionCategory()">Reject</v-btn>
+        <v-btn class="btn-approve" @click="onApproveFunctionCategory()">Approve</v-btn>
       </div>
       <div class="details-bot-div" v-else>
         <v-btn class="btn-normal" @click="onBack()">Back</v-btn>
-        <v-btn class="btn-edit" @click="onEditUser()">Edit</v-btn>
+        <v-btn class="btn-edit" @click="onEditFunctionCategory()">Edit</v-btn>
       </div>
     </div>
 
@@ -100,7 +69,7 @@
       <v-card>
         <div class="main-dialog">
           <v-card-title>
-            {{ mode }} User
+            {{ mode }} Function Category
           </v-card-title>
           <v-card-text>
             {{ dialog.value }}
@@ -137,12 +106,8 @@ export default {
       mode: Const.MODE_VIEW,
       isEditable: false,
       details: {
-        userId: null,
-        userName: '',
-        firstName: '',
-        lastName: '',
-        groupId: null,
-        groupName: '',
+        funcCatId: null,
+        categoryName: '',
         status: ''
       },
       groupList: [],
@@ -165,7 +130,7 @@ export default {
       this.$data.isEditable = Util.onEditableCheck(this.$data.mode)
     },
     getDetails() {
-      let url = "user/getUserDetails?userDtlsId="+ this.$store.getters.getUserDetail.dtlsId
+      let url = "function/getFunctionCategoryDetails?funcCatDtlsId="+ this.$store.getters.getFunctionCategoryDetail.dtlsId
       // if Approve/Reject then query by pending dtls id
       if(this.$data.mode == Const.MODE_APPROVE_REJECT){
         url += "&isPend=true"
@@ -176,18 +141,10 @@ export default {
         this.$data.details = response.data.data
       })
     },
-    getGroupList(){
-      this.axios.get("group/getGroupList").then((response) => {
-        const list = response.data.data.list.filter(obj => obj.status == 'y')
-        this.$data.groupList = list
-      })
-    },
-    onCreateUser() {
-      this.axios.post("user/addUser", {
-        userName: this.$data.details.userName,
-        firstName: this.$data.details.firstName,
-        lastName: this.$data.details.lastName,
-        groupId: this.$data.details.groupId
+    onCreateFunctionCategory() {
+      this.axios.post("function/addFunctionCategory", {
+        categoryName: this.$data.details.categoryName,
+        userId: 1 
       }).then((response) => {
         console.log(response.data.data)
         this.$data.details = response.data.data
@@ -199,17 +156,15 @@ export default {
         if(data.msg == Const.API_RESPONSE_SUCCESS){
           this.$data.dialog.value = 'Succesfully created!'
         } else {
-          this.$data.dialog.value = 'Error in creating user'
+          this.$data.dialog.value = 'Error in creating Function Category'
         }
       })
     },
-    onEditUser() {
-      this.axios.put("user/updateUser", {
-        userId: this.$data.details.userId,
-        userName: this.$data.details.userName,
-        firstName: this.$data.details.firstName,
-        lastName: this.$data.details.lastName,
-        groupId: this.$data.details.groupId
+    onEditFunctionCategory() {
+      this.axios.put("function/updateFunctionCategory", {
+        funcCatId: this.$data.details.funcCatId,
+        categoryName: this.$data.details.categoryName,
+        userId: 1
       }).then((response) => {
         console.log(response.data.data)
         this.$data.details = response.data.data
@@ -221,12 +176,12 @@ export default {
         if(data.msg == Const.API_RESPONSE_SUCCESS){
           this.$data.dialog.value = 'Succesfully edited!'
         } else {
-          this.$data.dialog.value = 'Error in editing user'
+          this.$data.dialog.value = 'Error in editing Function Category'
         }
       })
     },
-    onRejectUser(){
-      this.axios.put("user/changeStatus", {
+    onRejectFunctionCategory(){
+      this.axios.put("function/catChangeStatus", {
         userId: 1,
         jobId: this.$store.getters.getPendDetailData.jobId,
         actionCode: Const.CHANGE_STATUS_REJECT
@@ -240,12 +195,12 @@ export default {
         if(data.msg == Const.API_RESPONSE_SUCCESS){
           this.$data.dialog.value = 'Succesfully Rejected!'
         } else {
-          this.$data.dialog.value = 'Error in rejecting user'
+          this.$data.dialog.value = 'Error in rejecting Function Category'
         }
       })
     },
-    onApproveUser(){
-      this.axios.put("user/changeStatus", {
+    onApproveFunctionCategory(){
+      this.axios.put("function/catChangeStatus", {
         userId: 1,
         jobId: this.$store.getters.getPendDetailData.jobId,
         actionCode: Const.CHANGE_STATUS_APPROVE
@@ -259,7 +214,7 @@ export default {
         if(data.msg == Const.API_RESPONSE_SUCCESS){
           this.$data.dialog.value = 'Succesfully Approved!'
         } else {
-          this.$data.dialog.value = 'Error in approving user'
+          this.$data.dialog.value = 'Error in approving Function Category'
         }
       })
     },
@@ -268,13 +223,12 @@ export default {
         this.onBack()
     },
     setData(){
-      const userData = this.$store.getters.getUserDetail
-      this.$data.mode = userData.mode
+      const functionCategoryData = this.$store.getters.getFunctionCategoryDetail
+      this.$data.mode = functionCategoryData.mode
     }
   },
   async mounted(){
     this.setData()
-    this.getGroupList()
     this.onEditableCheck()
 
     if(this.$data.mode != Const.MODE_CREATE){

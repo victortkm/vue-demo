@@ -271,6 +271,12 @@ export default {
           break
 
         case Const.WFL_TYPE_FCC:
+          this.$store.commit('setFunctionCategoryDetail', 
+            {
+              dtlsId: item.docId,
+              mode: Const.MODE_APPROVE_REJECT
+            }
+          )
           break
         default:
 

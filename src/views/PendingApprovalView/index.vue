@@ -1,31 +1,32 @@
 <template>
-  <!-- <div class="mainbody"> -->
-
-    <!-- <div class="page-title-div">
-      <h1 class="page-title">Approve/Reject Pending Tasks</h1>
-    </div> -->
-
-    <User v-if=" pendDetailData.docType == 'USR'"/>
-    <Group v-if=" pendDetailData.docType == 'GRP'"/>
-    <Function v-if=" pendDetailData.docType == 'FNC'"/>
-  <!-- </div> -->
+    <User v-if=" pendDetailData.docType == WFL_TYPE_USR"/>
+    <Group v-if=" pendDetailData.docType == WFL_TYPE_GRP"/>
+    <Function v-if=" pendDetailData.docType == WFL_TYPE_FNC"/>
+    <FunctionCategory v-if=" pendDetailData.docType == WFL_TYPE_FCC"/>
 </template>
 
 <script>
 import User from '../UserView/index.vue'
 import Group from '../GroupView/index.vue'
 import Function from '../FunctionView/index.vue'
+import FunctionCategory from '../FunctionCategoryView/index.vue'
+import Const from '../../constant'
 
 export default {
   name: 'UserView',
   components: {
     User,
     Group,
-    Function
+    Function,
+    FunctionCategory
   },
   data() {
     return{
-      pendDetailData: {}
+      pendDetailData: {},
+      WFL_TYPE_GRP: Const.WFL_TYPE_GRP,
+      WFL_TYPE_FNC: Const.WFL_TYPE_FNC,
+      WFL_TYPE_USR: Const.WFL_TYPE_USR,
+      WFL_TYPE_FCC: Const.WFL_TYPE_FCC,
     }
   },
   computed: {
@@ -38,8 +39,7 @@ export default {
   created(){
     this.$data.pendDetailData =this.$store.getters.getPendDetailData;
     console.log('===== this.$data.pendDetailData')
-    console.log(
-    JSON.stringify(this.$data.pendDetailData))
+    console.log(JSON.stringify(this.$data.pendDetailData))
   }
 }
 </script>

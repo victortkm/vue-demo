@@ -47,11 +47,11 @@
 
   <v-layout>
     <v-app-bar
-      color="purple"
+      color="black"
       prominent
     >
       <v-app-bar-nav-icon :variant="drawer ? text : arrow" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Demo App</v-toolbar-title>
+      <v-toolbar-title class="text-blue-lighten-3">Demo App</v-toolbar-title>
       <v-spacer/>
       <v-spacer/>
       <v-spacer/>
@@ -73,7 +73,7 @@
         :to="item.link">
         <v-list>{{ item.title }}</v-list>
       </router-link> -->
-      <div
+      <button
         v-for="item in NavRoutes"
         :key="item.link"
         @click="go(item)"
@@ -87,7 +87,7 @@
           {{ item.title }}
         </v-list>
 
-      </div>
+      </button>
     </v-navigation-drawer>
 
     <v-main>
