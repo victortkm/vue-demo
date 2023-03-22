@@ -12,6 +12,7 @@ import FunctionListView from '../views/FunctionListView'
 import FunctionView from '../views/FunctionView'
 import FunctionCategoryListView from '../views/FunctionCategoryListView'
 import FunctionCategoryView from '../views/FunctionCategoryView'
+import LoginView from '../views/LoginView'
 
 const routes = [
   {
@@ -78,6 +79,11 @@ const routes = [
     name: 'functionCategoryDetails',
     component: FunctionCategoryView
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
 ]
 
 const router = createRouter({
@@ -140,7 +146,7 @@ export const NavRoutes = [
     name: 'functionListing',
     component: FunctionListView,
     title: 'Function Listing',
-    icon: 'mdi-function',
+    icon: 'mdi-text-account',
   },
   // {
   //   path: '/functionDetails',
@@ -154,7 +160,7 @@ export const NavRoutes = [
     name: 'functionCategoryListing',
     component: FunctionCategoryListView,
     title: 'Function Category Listing',
-    icon: 'mdi-text-account',
+    icon: 'mdi-format-list-text',
   },
   // {
   //   path: '/functionCategoryDetails',

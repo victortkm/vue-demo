@@ -1,9 +1,4 @@
 <template>
-  <!-- <v-toolbar title=" cassccas">
-      <v-btn icon>
-        <v-icon icon="mdi-minus" size="small"></v-icon>
-      </v-btn>
-    </v-toolbar> -->
 
   <main class="background"></main>
 
@@ -47,15 +42,14 @@
 
   <v-layout>
     <v-app-bar
-      color="black"
+      color="rgb(11, 11, 36)"
       prominent
     >
-      <v-app-bar-nav-icon :variant="drawer ? text : arrow" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="text-blue-lighten-5" :variant="drawer ? text : arrow" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="text-blue-lighten-3">Demo App</v-toolbar-title>
       <v-spacer/>
       <v-spacer/>
       <v-spacer/>
-      <v-btn variant="text" icon="mdi-dots-vertical"></v-btn>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -64,15 +58,6 @@
       temporary
       class="navbar"
     >
-      <!-- <v-list
-        :items="items"
-      ></v-list> -->
-      <!-- <router-link
-        v-for="item in routerItems"
-        :key="item.link"
-        :to="item.link">
-        <v-list>{{ item.title }}</v-list>
-      </router-link> -->
       <button
         v-for="item in NavRoutes"
         :key="item.link"
@@ -88,8 +73,17 @@
         </v-list>
 
       </button>
-    </v-navigation-drawer>
 
+      <button
+        class="nav-menu-logout"
+        @click="onLogout"
+      >
+        <v-icon icon="mdi-logout"/>
+        <v-list class='nav-menu-title'>
+          Logout
+        </v-list>
+      </button>
+    </v-navigation-drawer>
     <v-main>
       <router-view/>
     </v-main>
@@ -118,7 +112,8 @@ export default {
       { title: 'Dashboard', icon: 'mdi-view-dashboard', link:"/" },
       { title: 'Dashboard', icon: 'mdi-view-dashboard', link:"/" },
     ],
-    NavRoutes: NavRoutes
+    NavRoutes: NavRoutes,
+    optionVisible: false
   }),
   
   methods: {
@@ -132,6 +127,23 @@ export default {
       }
       return 'nav-menu'
     },
+    onOptionNav() {
+      this.$data.optionVisible = !this.$data.optionVisible
+    },
+    onClick() {
+      if(this.$data.optionVisible == true){
+      this.$data.optionVisible = false
+      }
+    },
+    onLogout(){
+      this.$store.commit('setLoginDetailData',
+        {
+          userName: '',
+          functionDtlsId: ''
+        }
+      )
+      this.$router.push({ name: 'login' })
+    }
   },
   mounted(){
   }

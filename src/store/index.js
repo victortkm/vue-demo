@@ -25,6 +25,10 @@ export default createStore({
       docType: Const.WFL_TYPE_USR,
       docId: 1,
       jobId: 1
+    },
+    loginDetail: {
+      userName: '',
+      functionDtlsId: ''
     }
   },
   getters: {
@@ -45,6 +49,9 @@ export default createStore({
     },
     getPendDetailData(state){
       return state.pendDetail
+    },
+    getLoginDetailData(state){
+      return state.loginDetail
     }
   },
   mutations: {
@@ -70,6 +77,10 @@ export default createStore({
     setPendDetailData(state, item){
       console.log("item",item)
       state.pendDetail = item
+    },
+    setLoginDetailData(state, item){
+      console.log("item",item)
+      state.loginDetail = item
     }
   },
   actions: {
