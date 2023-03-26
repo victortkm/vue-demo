@@ -3,7 +3,13 @@
 
     <div class="page-title-div">
       <h1 class="page-title">User Listing</h1>
-      <v-btn class="btn-create" @click="onCreate()">Create New</v-btn>
+      <div>
+        <v-btn class="btn-download" @click="onDownload()" style="margin-right: 10px;">
+          <v-icon icon="mdi-download"/>
+          User Report
+        </v-btn>
+        <v-btn class="btn-create" @click="onCreate()">Create New</v-btn>
+      </div>
     </div>
 
     <!-- filter section -->
@@ -349,6 +355,20 @@ export default {
       )
       this.$router.push({ name: 'userDetails' })
     },
+    onDownload(){
+      let url = this.getAPIParam('report/getUserListingReport')
+      this.downloadReport(url)
+    },
+    downloadReport(url){
+      this.axios.get(url, {responseType: 'arraybuffer'}).then((response)=>{
+        // saveAs(new Blob([response.data], { type: 'application/pdf' }), 'test', { autoBOM: false });
+        let blob = new Blob([response.data], { type: 'application/pdf' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = 'test.pdf'
+        link.click()
+      }).catch(console.error)
+    },
     iconSort(obj){
       // console.log('iconsort',obj, this.$data.currentSort)
       if(this.$data.currentSort != null){
@@ -386,6 +406,10 @@ export default {
       })
     },
     getList() {
+      let url = this.getAPIParam('user/getUserList')
+      this.getListAPI(url)
+    },
+    getAPIParam(url){
       const {
         userName,
         firstName,
@@ -399,9 +423,7 @@ export default {
         pageSize
       } = this.$data
 
-      let url = "user/getUserList"
-      const originalUrl = "user/getUserList"
-
+      const originalUrl = url
 
       if(userName != '' && userName != null){
         url = Util.genAPIParamQuery(url, originalUrl, "userName", userName)
@@ -424,12 +446,13 @@ export default {
       url = Util.genAPIParamQuery(url, originalUrl, "pageSize", pageSize)
 
       console.log(url)
-      this.getListAPI(url, currentSort, page)
+
+      return url
+
     },
     setPagination(totalCount){
       this.$data.totalPages = Math.ceil(totalCount/this.$data.pageSize)
     }
-    
   }
 }
 </script>

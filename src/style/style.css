@@ -201,6 +201,15 @@ tbody tr:nth-child(odd) {
   border-width: 1px !important;
 }
 
+.btn-download {
+  background-color: #aea5ff !important;
+  /* color: white !important; */
+  font-weight: bolder !important;
+  border-radius: 5px !important;
+  border-color: black !important;
+  border-width: 1px !important;
+}
+
 .btn-edit {
   background-color: #fffb29 !important;
   /* color: white !important; */

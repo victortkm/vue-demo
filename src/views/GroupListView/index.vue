@@ -3,7 +3,13 @@
 
     <div class="page-title-div">
       <h1 class="page-title">Group Listing</h1>
-      <v-btn class="btn-create" @click="onCreate()">Create New</v-btn>
+      <div>
+        <v-btn class="btn-download" @click="onDownload()" style="margin-right: 10px;">
+          <v-icon icon="mdi-download"/>
+          Group Report
+        </v-btn>
+        <v-btn class="btn-create" @click="onCreate()">Create New</v-btn>
+      </div>
     </div>
 
     <!-- filter section -->
@@ -202,6 +208,20 @@ export default {
       console.log('onClickPagination', this.$data.page)
       this.getList()
     },
+    onDownload(){
+      let url = this.getAPIParam('report/getGroupListingReport')
+      this.downloadReport(url)
+    },
+    downloadReport(url){
+      this.axios.get(url, {responseType: 'arraybuffer'}).then((response)=>{
+        // saveAs(new Blob([response.data], { type: 'application/pdf' }), 'test', { autoBOM: false });
+        let blob = new Blob([response.data], { type: 'application/pdf' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = 'test.pdf'
+        link.click()
+      }).catch(console.error)
+    },
     viewDetails(item){
       console.log(item)
       this.$store.commit('setGroupDetail',
@@ -311,6 +331,10 @@ export default {
       })
     },    
     getList() {
+      let url = this.getAPIParam('group/getGroupList')
+      this.getListAPI(url)
+    },
+    getAPIParam(url){
       const {
         groupName
       } = this.$data.search
@@ -321,9 +345,7 @@ export default {
         pageSize
       } = this.$data
 
-      let url = "group/getGroupList"
-      const originalUrl = "group/getGroupList"
-
+      const originalUrl = url
 
       if(groupName != '' && groupName != null){
         url = Util.genAPIParamQuery(url, originalUrl, "groupName", groupName)
@@ -337,7 +359,8 @@ export default {
       url = Util.genAPIParamQuery(url, originalUrl, "pageSize", pageSize)
 
       console.log(url)
-      this.getListAPI(url, currentSort, page)
+      
+      return url
     },
     setPagination(totalCount){
       this.$data.totalPages = Math.ceil(totalCount/this.$data.pageSize)
