@@ -62,6 +62,15 @@
         </div>
         <div class="w-45">
           <v-text-field
+            label="Password"
+            density="compact"
+            variant="outlined"
+            type='password'
+            v-model="this.$data.details.password"
+            :readonly="!isEditable"
+            v-if="mode == MODE_CREATE"
+            />
+          <v-text-field
             label="Status"
             density="compact"
             variant="outlined"
@@ -143,6 +152,7 @@ export default {
         lastName: '',
         groupId: null,
         groupName: '',
+        password: '',
         status: ''
       },
       groupList: [],
@@ -187,7 +197,8 @@ export default {
         userName: this.$data.details.userName,
         firstName: this.$data.details.firstName,
         lastName: this.$data.details.lastName,
-        groupId: this.$data.details.groupId
+        groupId: this.$data.details.groupId,
+        password: this.$data.details.password
       }).then((response) => {
         console.log(response.data.data)
         this.$data.details = response.data.data

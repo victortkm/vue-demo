@@ -1,20 +1,19 @@
 .mainbody {
-    background-color: white;
-    margin: 20px;
-    border-radius: 8px;
-    padding: 25px;
+  background-color: white;
+  margin: 20px;
+  border-radius: 8px;
+  padding: 25px;
 }
 
 /* nav */
 .navbar {
   padding: 0px;
-  background-color: rgb(31, 32, 85) !important;
-  /* background-color: rgb(11, 11, 36) !important; */
-  color: #90CAF9 !important;
+  background-color: rgb(183, 186, 228) !important;
+  color: #1d0b47 !important;
 }
 
 .selected-nav-menu { 
-  background-image: linear-gradient(to right, rgb(71, 78, 165),rgb(45, 46, 107), rgb(35, 36, 87)) !important;
+  background-image: linear-gradient(to right, rgb(142, 71, 209), rgb(96, 104, 212)) !important;
   display: flex;
   /* justify-content: center; */
   align-items: center;
@@ -36,7 +35,7 @@
   align-items: center;
   padding: 10px;
   width: 100%;
-  background-color: rgb(31, 32, 85) !important;
+  background-color: rgb(183, 186, 228) !important;
   
 }
 

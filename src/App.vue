@@ -42,11 +42,12 @@
 
   <v-layout>
     <v-app-bar
-      color="rgb(11, 11, 36)"
+      color="indigo-lighten-5"
       prominent
+      v-if="renderNavBar()"
     >
-      <v-app-bar-nav-icon class="text-blue-lighten-5" :variant="drawer ? text : arrow" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-blue-lighten-3">Demo App</v-toolbar-title>
+      <v-app-bar-nav-icon   :variant="drawer ? text : arrow" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title  >Demo App</v-toolbar-title>
       <v-spacer/>
       <v-spacer/>
       <v-spacer/>
@@ -143,6 +144,13 @@ export default {
         }
       )
       this.$router.push({ name: 'login' })
+    },
+    renderNavBar(){
+      if(this.$route.meta && this.$route.meta.disableNavBar){
+        return false
+      }
+      return true
+
     }
   },
   mounted(){
