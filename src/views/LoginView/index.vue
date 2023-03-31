@@ -52,6 +52,7 @@ export default {
       }).then((response)=> {
         console.log(response.data)
         if(response.data.result == true){
+          this.$store.commit('setLoginDetailData', response.data.data)
           this.$router.push({ name: 'home' })
         }
       })

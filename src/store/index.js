@@ -28,7 +28,8 @@ export default createStore({
     },
     loginDetail: {
       userName: '',
-      functionDtlsId: ''
+      functionDtlsId: '',
+      firstName: ''
     }
   },
   getters: {
