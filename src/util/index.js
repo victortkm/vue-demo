@@ -67,7 +67,29 @@ function onEditableCheck(val){
   } else {
     return false
   }
+}
 
+function authPermission(cPermission, vPermission, ePermission, dPermission, list){
+  let create = false
+  let view = false
+  let edit = false
+  let del = false
+
+  if(list.filter(val=> val == cPermission).length > 0){
+    create = true
+  }
+  if(list.filter(val=> val == vPermission).length > 0){
+    view = true
+  }
+  if(list.filter(val=> val == ePermission).length > 0){
+    edit = true
+  }
+  if(list.filter(val=> val == dPermission).length > 0){
+    del = true
+  }
+  console.log(cPermission, vPermission, ePermission, dPermission)
+  console.log(create, view, edit, del, list)
+  return({create, view, edit, del})
 }
 
 export default {
@@ -76,5 +98,6 @@ export default {
   getStatus: getStatus,
   getChangeMode: getChangeMode,
   getWflType: getWflType,
-  onEditableCheck: onEditableCheck
+  onEditableCheck: onEditableCheck,
+  authPermission: authPermission
 }

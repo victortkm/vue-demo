@@ -29,10 +29,15 @@
   </div>
 </template>
 
-<script> 
+<script>
+import { useCookies } from "vue3-cookies";
 
 export default {
   name: 'UserListView',
+  setup() {
+    const { cookies } = useCookies();
+    return { cookies };
+  },
   components: {
   },
   data() {
@@ -42,7 +47,6 @@ export default {
     }
   },
   mounted(){
-    this.login()
   },
   methods: {
     login(){
@@ -52,7 +56,10 @@ export default {
       }).then((response)=> {
         console.log(response.data)
         if(response.data.result == true){
-          this.$store.commit('setLoginDetailData', response.data.data)
+          let object = response.data.data
+          // FOR DEMO ONLY!!!
+          object.password = this.$data.password
+          this.cookies.set("loginData", object);
           this.$router.push({ name: 'home' })
         }
       })

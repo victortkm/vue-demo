@@ -28,8 +28,10 @@ export default createStore({
     },
     loginDetail: {
       userName: '',
-      functionDtlsId: '',
-      firstName: ''
+      functionIds: [],
+      firstName: '',
+      // FOR DEMO ONLY!!!
+      password: ''
     }
   },
   getters: {
@@ -50,9 +52,6 @@ export default createStore({
     },
     getPendDetailData(state){
       return state.pendDetail
-    },
-    getLoginDetailData(state){
-      return state.loginDetail
     }
   },
   mutations: {
@@ -78,10 +77,6 @@ export default createStore({
     setPendDetailData(state, item){
       console.log("item",item)
       state.pendDetail = item
-    },
-    setLoginDetailData(state, item){
-      console.log("item",item)
-      state.loginDetail = item
     }
   },
   actions: {

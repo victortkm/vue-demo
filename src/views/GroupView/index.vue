@@ -131,9 +131,14 @@
 <script>
 import Util from '../../util'
 import Const from '../../constant'
+import { useCookies } from "vue3-cookies";
 
 export default {
   name: 'GroupListView',
+  setup() {
+    const { cookies } = useCookies();
+    return { cookies };
+  },
   components: {
   },
   data() {
@@ -173,7 +178,6 @@ export default {
     },
     getFunctionList(){
       this.axios.get("function/getFuncCatWithFuncList").then((response) => {
-        console.log(response.data.data)
         this.$data.functionList = response.data.data
       })
     },
@@ -185,7 +189,6 @@ export default {
       }
       console.log(url)
       this.axios.get(url).then((response) => {
-        console.log(response.data.data)
         this.$data.details = response.data.data
       })
     },
@@ -261,6 +264,7 @@ export default {
 
         if(data.msg == Const.API_RESPONSE_SUCCESS){
           this.$data.dialog.value = 'Succesfully Approved!'
+          this.getNewPermission()
         } else {
           this.$data.dialog.value = 'Error in approving group'
         }
@@ -274,7 +278,27 @@ export default {
       const groupData = this.$store.getters.getGroupDetail
       this.$data.mode = groupData.mode
     },
-    test(){
+    getNewPermission(){
+      let loginData = this.cookies.get('loginData')
+      this.axios.post("user/login", {
+        userName: loginData.userName,
+        password: loginData.password,
+      }).then((response)=> {
+        console.log(response)
+        if(response.data.result == true){
+          // let temp = response.data.data
+          // FOR DEMO ONLY!!!
+          // temp.password = this.$store.getters.getLoginDetailData.password
+          // this.$store.commit('setLoginDetailData', temp)
+          
+          let object = response.data.data
+          // FOR DEMO ONLY!!!
+          object.password = loginData.password
+          this.cookies.set("loginData", object);
+          console.log('cookies')
+          console.log(object)
+        }
+      })
     }
   },
   async mounted(){

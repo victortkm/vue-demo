@@ -249,6 +249,14 @@ tbody tr:nth-child(odd) {
   border-width: 1px !important;
 }
 
+.btn-disabled {
+  background-color: #b4b4b4 !important;
+  font-weight: bolder !important;
+  border-radius: 5px !important;
+  border-color: black !important;
+  border-width: 1px !important;
+}
+
 /* details div */
 .details-div {
   border-width: 1px;

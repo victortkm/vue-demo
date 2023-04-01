@@ -7,18 +7,22 @@
 </template>
 
 <script>
+import { useCookies } from "vue3-cookies";
 
 export default {
   name: 'HomeView',
+  setup() {
+    const { cookies } = useCookies();
+    return { cookies };
+  },
   data(){
     return{
       firstName: ''
     }
   },
   created(){
-    let loginDetail = this.$store.getters.getLoginDetailData
-    console.log(loginDetail)
-    this.$data.firstName = loginDetail.firstName
+    let loginData = this.cookies.get('loginData')
+    this.$data.firstName = loginData.firstName
   }
 }
 </script>

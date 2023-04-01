@@ -96,7 +96,13 @@
 <script>
 import './style/style.css'
 import { NavRoutes } from './router/index'
+import { useCookies } from "vue3-cookies";
+
 export default {
+  setup() {
+    const { cookies } = useCookies();
+    return { cookies };
+  },
 
   data: () => ({
     items: [
@@ -137,12 +143,11 @@ export default {
       }
     },
     onLogout(){
-      this.$store.commit('setLoginDetailData',
-        {
+      this.cookies.set('loginData',{
           userName: '',
-          functionDtlsId: ''
-        }
-      )
+          functionIds: [],
+          firstName: ''
+        });
       this.$router.push({ name: 'login' })
     },
     renderNavBar(){

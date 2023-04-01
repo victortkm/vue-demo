@@ -14,7 +14,7 @@ import store from './store'
 // axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
+import { globalCookiesConfig } from "vue3-cookies";
 
 const vuetify = createVuetify({
   components,
@@ -24,5 +24,9 @@ const vuetify = createVuetify({
 const temp = axios.create({
   baseURL: '/'
 })
+
+globalCookiesConfig({
+  expireTimes: "999y"
+});
 
 createApp(App).use(vuetify).use(store).use(store).use(router).use(VueAxios, temp).mount('#app')
