@@ -61,7 +61,7 @@
                 :key="func.functionDtlsId"
                 class="func-cat-checkbox"
                 density="compact"
-                color="blue"
+                :color="isEditable ? 'blue' : 'grey'"
                 v-model="details.functionIds"
                 :label="func.functionName"
                 :value="func.functionId"
@@ -286,10 +286,6 @@ export default {
       }).then((response)=> {
         console.log(response)
         if(response.data.result == true){
-          // let temp = response.data.data
-          // FOR DEMO ONLY!!!
-          // temp.password = this.$store.getters.getLoginDetailData.password
-          // this.$store.commit('setLoginDetailData', temp)
           
           let object = response.data.data
           // FOR DEMO ONLY!!!

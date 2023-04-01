@@ -18,6 +18,9 @@
         type='password'
         v-model="password"
         />
+        <h4 class="error-message">
+          {{ errorMsg }}
+        </h4>
         <v-btn
           class="btn-login" 
           variant="outlined"
@@ -44,6 +47,8 @@ export default {
     return {
       userName: '',
       password: '',
+      isError: false,
+      errorMsg: ''
     }
   },
   mounted(){
@@ -61,6 +66,9 @@ export default {
           object.password = this.$data.password
           this.cookies.set("loginData", object);
           this.$router.push({ name: 'home' })
+        } else {
+          this.$data.isError = true
+          this.$data.errorMsg = response.data.msg
         }
       })
     }
@@ -83,4 +91,8 @@ export default {
   font-weight: bold !important;
 }
 
+.error-message {
+  color: red;
+  padding-bottom: 20px;
+}
 </style>
