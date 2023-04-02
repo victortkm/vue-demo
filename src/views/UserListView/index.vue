@@ -8,7 +8,12 @@
           <v-icon icon="mdi-download"/>
           User Report
         </v-btn>
-        <v-btn :class="createPermission ? 'btn-create' : 'btn-disabled'" :disabled="createPermission ? false : true" @click="onCreate()">Create New</v-btn>
+        <v-btn
+          :class="createPermission ? 'btn-create' : 'btn-disabled'"
+          :disabled="createPermission ? false : true"
+          @click="onCreate()">
+          Create New
+        </v-btn>
       </div>
     </div>
 

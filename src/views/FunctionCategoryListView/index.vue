@@ -3,7 +3,13 @@
 
     <div class="page-title-div">
       <h1 class="page-title">Function Category Listing</h1>
-      <v-btn class="btn-create" @click="onCreate()">Create New</v-btn>
+      <v-btn
+        :class="createPermission ? 'btn-create' : 'btn-disabled'"
+        :disabled="createPermission ? false : true"
+        @click="onCreate()"
+      >
+        Create New
+      </v-btn>
     </div>
 
     <!-- filter section -->
@@ -92,13 +98,13 @@
           <td>{{ item.updatedTime }}</td>
           <td class="table-action-row">
             <button @click="viewDetails(item)" :disabled="!viewPermission">
-              <v-icon icon="mdi-magnify" size="large"/>
+              <v-icon :color="viewPermission ? 'black': 'grey'" icon="mdi-magnify" size="large"/>
             </button>
             <button @click="editDetails(item)" :disabled="!editPermission">
-              <v-icon icon="mdi-pencil" size="large"/>
+              <v-icon :color="editPermission ? 'black': 'grey'" icon="mdi-pencil" size="large"/>
             </button>
             <button @click="deleteDialog(item)" :disabled="!deletePermission">
-              <v-icon icon="mdi-delete" size="large"/>
+              <v-icon :color="deletePermission ? 'black': 'grey'" icon="mdi-delete" size="large"/>
             </button>
           </td>
         </tr>
@@ -160,10 +166,13 @@
 <script> 
 import Util from '../../util'
 import Const from '../../constant'
+import { useCookies } from "vue3-cookies";
 
 export default {
   name: 'FunctionCategoryListView',
-  components: {
+  setup() {
+    const { cookies } = useCookies();
+    return { cookies };
   },
   data() {
     return {
@@ -172,6 +181,7 @@ export default {
       page: 1,
       totalPages: 1,
       pageSize: 5,
+      createPermission: true,
       viewPermission: true,
       editPermission: true,
       deletePermission: true,
@@ -192,8 +202,17 @@ export default {
   },
   mounted(){
     this.getList()
+    let loginData = this.cookies.get('loginData')
+    let permission = Util.authPermission(7,8,9,10, loginData.functionIds)
+    this.setPermission(permission)
   },
   methods: {
+    setPermission(permission){
+      this.$data.createPermission = permission.create
+      this.$data.viewPermission = permission.view
+      this.$data.editPermission = permission.edit
+      this.$data.deletePermission = permission.del
+    },
     getStatus(val){
       return Util.getStatus(val)
     },
