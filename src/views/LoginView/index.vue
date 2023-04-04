@@ -64,6 +64,7 @@ export default {
           let object = response.data.data
           // FOR DEMO ONLY!!!
           object.password = this.$data.password
+          console.log(object)
           this.cookies.set("loginData", object);
           this.$router.push({ name: 'home' })
         } else {

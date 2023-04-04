@@ -203,7 +203,7 @@ export default {
   mounted(){
     this.getList()
     let loginData = this.cookies.get('loginData')
-    let permission = Util.authPermission(7,8,9,10, loginData.functionIds)
+    let permission = Util.authPermission(23,21,22,24, loginData.functionIds)
     this.setPermission(permission)
   },
   methods: {
